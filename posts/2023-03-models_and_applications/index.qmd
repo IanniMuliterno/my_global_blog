@@ -21,8 +21,6 @@ knitr:
 
 As a senior data scientist, one of the key responsibilities is to identify the right modeling approach for a given problem. Different modeling approaches have different strengths and weaknesses, and choosing the right approach is crucial to building an effective and accurate model. This post is the first in a series of posts on modeling approaches, I will discuss the strengths and weaknesses of some popular modeling approaches and when to apply different combinations.
 
-This post is the first in a series of posts on modeling approaches
-
 ## 1. Linear Regression
 
 Linear regression is a popular modeling approach used for predicting continuous values. It is a simple yet powerful modeling approach that works well when the relationship between the predictor and response variable is linear. Linear regression models are easy to interpret and can be used for both simple and complex problems.
@@ -151,9 +149,8 @@ Support Vector Machines (SVMs) are a popular modeling approach used for classifi
 
 -   When the data has many predictors.
 
-```{=html}
 <!-- -->
-```
+
 -   When the data has both linear and nonlinear relationships between predictors and response variables.
 
 -   When the data has outliers.

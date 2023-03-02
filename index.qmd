@@ -1,5 +1,5 @@
 ---
-title: "Bea Milz"
+title: "Ianní Muliterno"
 listing:
   - id: posts
     contents: posts/**/*/index.qmd
@@ -17,13 +17,13 @@ include-in-header: meta.html
 toc: true
 ---
 
-## Recent posts / Posts recentes
+## Recent posts
 
 ::: {#posts}
 :::
 
-<a href="../posts/index.html"> <button type="button" class="btn btn-primary float-end btn-sm">See all/Ver todos</button></a>
+<a href="../posts/index.html"> <button type="button" class="btn btn-primary float-end btn-sm">See all</button></a>
 
 <br>
 
----
+------------------------------------------------------------------------
