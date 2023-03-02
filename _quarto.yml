@@ -2,7 +2,21 @@ project:
   type: website
 
 website:
-  title: "my_global_blog"
+  title: "Ianní Muliterno"
+  site-url: "https://iannimuliterno.com/"
+ # google-analytics: 
+  page-footer:
+    left: "Blog made with [Quarto](https://quarto.org/), by Ianní Muliterno." 
+    right:
+      - icon: github
+        href: https://github.com/IanniMuliterno/
+      - icon: twitter
+        href: https://twitter.com/IanniMuliterno
+      - icon: envelope
+        href: mailto:iannimuliterno@gmail.com
+  twitter-card:
+    creator: "@IanniMuliterno"
+    card-style: summary_large_image
   navbar:
     left:
       - href: index.qmd
@@ -14,7 +28,16 @@ format:
     theme: vapor
     css: styles.css
     toc: true
-
+    code-copy: true
+    code-link: true
+    code-overflow: wrap
+    fontsize: "15pt"
+    footnotes-hover: true
+    link-external-icon: true
+    link-external-newwindow: true
+    link-external-filter: '^(?:http:|https:)\/\/www\.iannimuliterno\.com\/**'
+    citations-hover: true
+    
 editor: visual
 
 comments:

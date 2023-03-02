@@ -1,0 +1,165 @@
+---
+title: "Modeling Approaches"
+author: "Ianní Muliterno"
+date: "2023-03-01" 
+categories: 
+# exemplo de categorias:
+  - "Machine learning"
+  - "Statistics"
+  - "Data Science"
+toc: true # isso habilita o sumário ao lado do post
+#image: "images/logo.png" # imagem usada na página inicial junto ao post
+#bibliography: "pacotes.bib" # arquivo de bibliografia. Pode adicionar mais arquivos!
+draft: false # enquanto estiver draft: true, o post é um rascunho
+knitr: 
+  opts_chunk: 
+    message: true
+    warning: false
+    echo: true
+    fig.align: 'center'
+---
+
+As a senior data scientist, one of the key responsibilities is to identify the right modeling approach for a given problem. Different modeling approaches have different strengths and weaknesses, and choosing the right approach is crucial to building an effective and accurate model. This post is the first in a series of posts on modeling approaches, I will discuss the strengths and weaknesses of some popular modeling approaches and when to apply different combinations.
+
+This post is the first in a series of posts on modeling approaches
+
+## 1. Linear Regression
+
+Linear regression is a popular modeling approach used for predicting continuous values. It is a simple yet powerful modeling approach that works well when the relationship between the predictor and response variable is linear. Linear regression models are easy to interpret and can be used for both simple and complex problems.
+
+### Strengths:
+
+-   Easy to interpret and explain.
+
+-   Works well when the relationship between predictor and response variable is linear.
+
+-   Can handle both simple and complex problems.
+
+### Weaknesses:
+
+-   Assumes a linear relationship between predictor and response variable.
+
+-   Sensitive to outliers and multicollinearity.
+
+### When to use:
+
+-   When the relationship between predictor and response variable is linear.
+
+-   When the data has few predictors.
+
+-   When the data has no multicollinearity or outliers.
+
+## 2. Decision Trees
+
+Decision trees are a popular modeling approach used for classification and regression. They work by partitioning the data into smaller subsets based on the values of the predictors. Decision trees are easy to interpret and can handle both categorical and continuous predictors. Personally, I prefer to apply only for categorical predictors.
+
+### Strengths:
+
+-   Easy to interpret and explain.
+
+-   Can handle both categorical and continuous predictors.
+
+-   Can handle interactions between predictors.
+
+### Weaknesses:
+
+-   Can overfit the data.
+
+-   Sensitive to small changes in the data.
+
+### When to use:
+
+-   When the data has many predictors.
+
+-   When the data has interactions between predictors.
+
+-   When the data has both categorical and continuous predictors.
+
+## 3. Random Forests
+
+Random forests are an extension of decision trees that work by combining multiple decision trees to make a final prediction. They are a popular modeling approach used for classification and regression. Random forests are robust to overfitting and can handle both categorical and continuous predictors.
+
+### Strengths:
+
+-   Robust to overfitting.
+
+-   Can handle both categorical and continuous predictors.
+
+-   Can handle interactions between predictors.
+
+### Weaknesses:
+
+-   Can be slow to train and predict.
+
+-   Can be difficult to interpret.
+
+### When to use:
+
+-   When the data has many predictors.
+
+-   When the data has interactions between predictors.
+
+-   When the data has both categorical and continuous predictors.
+
+-   When the data has outliers or missing values.
+
+## 4. Neural Networks
+
+Neural networks are a popular modeling approach used for classification and regression. They work by mimicking the structure of the human brain to identify complex patterns in the data. Neural networks are powerful and can handle both linear and nonlinear relationships between predictors and response variables.
+
+### Strengths:
+
+-   Can handle both linear and nonlinear relationships between predictors and response variables.
+
+-   Can identify complex patterns in the data.
+
+-   Can handle large and complex datasets.
+
+### Weaknesses:
+
+-   Can be slow to train and predict.
+
+-   Can overfit the data.
+
+### When to use:
+
+-   When the data has many predictors.
+
+-   When the data has complex relationships between predictors and response variables.
+
+-   When the data has large and complex datasets.
+
+## 5. Support Vector Machines
+
+Support Vector Machines (SVMs) are a popular modeling approach used for classification and regression. They work by finding the hyperplane that best separates the data into different classes. SVMs are powerful and can handle both linear and nonlinear relationships between predictors and response variables.
+
+### Strengths:
+
+-   Can handle both linear and nonlinear relationships between predictors and response variables.
+
+-   Can handle high-dimensional datasets.
+
+-   Can handle outliers.
+
+### Weaknesses:
+
+-   Can be sensitive to the choice of kernel function.
+
+-   Can be slow to train and predict.
+
+### When to use:
+
+-   When the data has many predictors.
+
+```{=html}
+<!-- -->
+```
+-   When the data has both linear and nonlinear relationships between predictors and response variables.
+
+-   When the data has outliers.
+
+In practice, different modeling approaches may be combined to build more accurate and robust models. For example, a decision tree model may be combined with a random forest model to improve accuracy and reduce overfitting. Or, a linear regression model may be combined with a support vector machine model to handle both linear and nonlinear relationships between predictors and response variables.
+
+When choosing a modeling approach or combination of approaches, it is important to consider the strengths and weaknesses of each approach in relation to the specific problem at hand. It is also important to consider factors such as the size and complexity of the data, the level of interpretability required, and the computational resources available.
+
+In summary, there are a variety of modeling approaches that can be used in data science, each with its own strengths and weaknesses. By carefully considering the specific problem at hand and choosing the right combination of modeling approaches, data scientists can build accurate and robust models that provide valuable insights and predictions.

@@ -2,9 +2,9 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "my_global_blog",
+    "title": "Bea Milz",
     "section": "",
-    "text": "To learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2"
+    "text": "Machine learning\n\n\nStatistics\n\n\nData Science\n\n\n \n\n\n\n\nMar 1, 2023\n\n\nIanní Muliterno\n\n\n4 min\n\n\n\n\n\n\nNo matching items\n\n\n See all/Ver todos"
   },
   {
     "objectID": "about.html",
@@ -12,5 +12,54 @@
     "title": "About",
     "section": "",
     "text": "1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "posts/index.html",
+    "href": "posts/index.html",
+    "title": "Posts",
+    "section": "",
+    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n \n\n\n\nModeling Approaches\n\n\n\nMar 1, 2023\n\n\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/2023-03-models_and_applications/index.html",
+    "href": "posts/2023-03-models_and_applications/index.html",
+    "title": "Modeling Approaches",
+    "section": "",
+    "text": "As a senior data scientist, one of the key responsibilities is to identify the right modeling approach for a given problem. Different modeling approaches have different strengths and weaknesses, and choosing the right approach is crucial to building an effective and accurate model. This post is the first in a series of posts on modeling approaches, I will discuss the strengths and weaknesses of some popular modeling approaches and when to apply different combinations.\nThis post is the first in a series of posts on modeling approaches"
+  },
+  {
+    "objectID": "posts/2023-03-models_and_applications/index.html#linear-regression",
+    "href": "posts/2023-03-models_and_applications/index.html#linear-regression",
+    "title": "Modeling Approaches",
+    "section": "1. Linear Regression",
+    "text": "1. Linear Regression\nLinear regression is a popular modeling approach used for predicting continuous values. It is a simple yet powerful modeling approach that works well when the relationship between the predictor and response variable is linear. Linear regression models are easy to interpret and can be used for both simple and complex problems.\n\nStrengths:\n\nEasy to interpret and explain.\nWorks well when the relationship between predictor and response variable is linear.\nCan handle both simple and complex problems.\n\n\n\nWeaknesses:\n\nAssumes a linear relationship between predictor and response variable.\nSensitive to outliers and multicollinearity.\n\n\n\nWhen to use:\n\nWhen the relationship between predictor and response variable is linear.\nWhen the data has few predictors.\nWhen the data has no multicollinearity or outliers."
+  },
+  {
+    "objectID": "posts/2023-03-models_and_applications/index.html#decision-trees",
+    "href": "posts/2023-03-models_and_applications/index.html#decision-trees",
+    "title": "Modeling Approaches",
+    "section": "2. Decision Trees",
+    "text": "2. Decision Trees\nDecision trees are a popular modeling approach used for classification and regression. They work by partitioning the data into smaller subsets based on the values of the predictors. Decision trees are easy to interpret and can handle both categorical and continuous predictors. Personally, I prefer to apply only for categorical predictors.\n\nStrengths:\n\nEasy to interpret and explain.\nCan handle both categorical and continuous predictors.\nCan handle interactions between predictors.\n\n\n\nWeaknesses:\n\nCan overfit the data.\nSensitive to small changes in the data.\n\n\n\nWhen to use:\n\nWhen the data has many predictors.\nWhen the data has interactions between predictors.\nWhen the data has both categorical and continuous predictors."
+  },
+  {
+    "objectID": "posts/2023-03-models_and_applications/index.html#random-forests",
+    "href": "posts/2023-03-models_and_applications/index.html#random-forests",
+    "title": "Modeling Approaches",
+    "section": "3. Random Forests",
+    "text": "3. Random Forests\nRandom forests are an extension of decision trees that work by combining multiple decision trees to make a final prediction. They are a popular modeling approach used for classification and regression. Random forests are robust to overfitting and can handle both categorical and continuous predictors.\n\nStrengths:\n\nRobust to overfitting.\nCan handle both categorical and continuous predictors.\nCan handle interactions between predictors.\n\n\n\nWeaknesses:\n\nCan be slow to train and predict.\nCan be difficult to interpret.\n\n\n\nWhen to use:\n\nWhen the data has many predictors.\nWhen the data has interactions between predictors.\nWhen the data has both categorical and continuous predictors.\nWhen the data has outliers or missing values."
+  },
+  {
+    "objectID": "posts/2023-03-models_and_applications/index.html#neural-networks",
+    "href": "posts/2023-03-models_and_applications/index.html#neural-networks",
+    "title": "Modeling Approaches",
+    "section": "4. Neural Networks",
+    "text": "4. Neural Networks\nNeural networks are a popular modeling approach used for classification and regression. They work by mimicking the structure of the human brain to identify complex patterns in the data. Neural networks are powerful and can handle both linear and nonlinear relationships between predictors and response variables.\n\nStrengths:\n\nCan handle both linear and nonlinear relationships between predictors and response variables.\nCan identify complex patterns in the data.\nCan handle large and complex datasets.\n\n\n\nWeaknesses:\n\nCan be slow to train and predict.\nCan overfit the data.\n\n\n\nWhen to use:\n\nWhen the data has many predictors.\nWhen the data has complex relationships between predictors and response variables.\nWhen the data has large and complex datasets."
+  },
+  {
+    "objectID": "posts/2023-03-models_and_applications/index.html#support-vector-machines",
+    "href": "posts/2023-03-models_and_applications/index.html#support-vector-machines",
+    "title": "Modeling Approaches",
+    "section": "5. Support Vector Machines",
+    "text": "5. Support Vector Machines\nSupport Vector Machines (SVMs) are a popular modeling approach used for classification and regression. They work by finding the hyperplane that best separates the data into different classes. SVMs are powerful and can handle both linear and nonlinear relationships between predictors and response variables.\n\nStrengths:\n\nCan handle both linear and nonlinear relationships between predictors and response variables.\nCan handle high-dimensional datasets.\nCan handle outliers.\n\n\n\nWeaknesses:\n\nCan be sensitive to the choice of kernel function.\nCan be slow to train and predict.\n\n\n\nWhen to use:\n\nWhen the data has many predictors.\n\n\n\nWhen the data has both linear and nonlinear relationships between predictors and response variables.\nWhen the data has outliers.\n\nIn practice, different modeling approaches may be combined to build more accurate and robust models. For example, a decision tree model may be combined with a random forest model to improve accuracy and reduce overfitting. Or, a linear regression model may be combined with a support vector machine model to handle both linear and nonlinear relationships between predictors and response variables.\nWhen choosing a modeling approach or combination of approaches, it is important to consider the strengths and weaknesses of each approach in relation to the specific problem at hand. It is also important to consider factors such as the size and complexity of the data, the level of interpretability required, and the computational resources available.\nIn summary, there are a variety of modeling approaches that can be used in data science, each with its own strengths and weaknesses. By carefully considering the specific problem at hand and choosing the right combination of modeling approaches, data scientists can build accurate and robust models that provide valuable insights and predictions."
   }
 ]

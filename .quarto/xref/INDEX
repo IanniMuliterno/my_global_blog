@@ -4,5 +4,11 @@
   },
   "about.qmd": {
     "about.html": "11eafa49"
+  },
+  "posts/index.qmd": {
+    "index.html": "424960e2"
+  },
+  "posts/2023-03-models_and_applications/index.qmd": {
+    "index.html": "90587449"
   }
 }
