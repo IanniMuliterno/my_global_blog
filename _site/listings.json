@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2023-03-dectree_python/index.html",
       "/posts/2023-03-lm_python/index.html",
       "/posts/2023-03-models_and_applications/index.html"
     ]
@@ -9,6 +10,7 @@
   {
     "listing": "/posts/index.html",
     "items": [
+      "/posts/2023-03-dectree_python/index.html",
       "/posts/2023-03-lm_python/index.html",
       "/posts/2023-03-models_and_applications/index.html"
     ]

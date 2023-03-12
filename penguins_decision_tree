@@ -1,0 +1,29 @@
+digraph Tree {
+node [shape=box, style="filled, rounded", color="black", fontname="helvetica"] ;
+edge [fontname="helvetica"] ;
+0 [label=<flipper_length_mm &le; 206.5<br/>gini = 0.634<br/>samples = 266<br/>value = [115, 50, 101]<br/>class = Adelie>, fillcolor="#fdf4ee"] ;
+1 [label=<bill_length_mm &le; 43.35<br/>gini = 0.419<br/>samples = 160<br/>value = [113, 46, 1]<br/>class = Adelie>, fillcolor="#f0b58b"] ;
+0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
+2 [label=<bill_length_mm &le; 42.35<br/>gini = 0.052<br/>samples = 112<br/>value = [109, 3, 0]<br/>class = Adelie>, fillcolor="#e6843e"] ;
+1 -> 2 ;
+3 [label=<gini = 0.019<br/>samples = 105<br/>value = [104, 1, 0]<br/>class = Adelie>, fillcolor="#e5823b"] ;
+2 -> 3 ;
+4 [label=<gini = 0.408<br/>samples = 7<br/>value = [5, 2, 0]<br/>class = Adelie>, fillcolor="#efb388"] ;
+2 -> 4 ;
+5 [label=<island_Dream &le; 0.5<br/>gini = 0.19<br/>samples = 48<br/>value = [4, 43, 1]<br/>class = Chinstrap>, fillcolor="#50e88f"] ;
+1 -> 5 ;
+6 [label=<gini = 0.375<br/>samples = 4<br/>value = [3, 0, 1]<br/>class = Adelie>, fillcolor="#eeab7b"] ;
+5 -> 6 ;
+7 [label=<gini = 0.044<br/>samples = 44<br/>value = [1, 43, 0]<br/>class = Chinstrap>, fillcolor="#3ee684"] ;
+5 -> 7 ;
+8 [label=<island_Biscoe &le; 0.5<br/>gini = 0.108<br/>samples = 106<br/>value = [2, 4, 100]<br/>class = Gentoo>, fillcolor="#8845e7"] ;
+0 -> 8 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+9 [label=<bill_length_mm &le; 46.55<br/>gini = 0.444<br/>samples = 6<br/>value = [2, 4, 0]<br/>class = Chinstrap>, fillcolor="#9cf2c0"] ;
+8 -> 9 ;
+10 [label=<gini = 0.0<br/>samples = 2<br/>value = [2, 0, 0]<br/>class = Adelie>, fillcolor="#e58139"] ;
+9 -> 10 ;
+11 [label=<gini = 0.0<br/>samples = 4<br/>value = [0, 4, 0]<br/>class = Chinstrap>, fillcolor="#39e581"] ;
+9 -> 11 ;
+12 [label=<gini = 0.0<br/>samples = 100<br/>value = [0, 0, 100]<br/>class = Gentoo>, fillcolor="#8139e5"] ;
+8 -> 12 ;
+}

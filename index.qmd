@@ -1,5 +1,5 @@
 ---
-title: "Ianní Muliterno"
+title: "IMuliterno"
 listing:
   - id: posts
     contents: posts/**/*/index.qmd

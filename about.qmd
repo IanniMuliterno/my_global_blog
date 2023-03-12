@@ -2,8 +2,6 @@
 title: "About"
 ---
 
-About this site
+I am a data scientist and here I practice.
 
-```{r}
-1 + 1
-```
+My expertise lies in developing and implementing data-driven solutions to drive business growth and enhance performance. My main programming are R, SQL and Python.

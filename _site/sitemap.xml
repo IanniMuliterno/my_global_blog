@@ -2,11 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://iannimuliterno.com/index.html</loc>
-    <lastmod>2023-03-06T22:25:12.027Z</lastmod>
+    <lastmod>2023-03-11T23:50:16.131Z</lastmod>
   </url>
   <url>
     <loc>https://iannimuliterno.com/posts/index.html</loc>
-    <lastmod>2023-03-06T22:25:12.540Z</lastmod>
+    <lastmod>2023-03-11T23:50:18.275Z</lastmod>
   </url>
   <url>
     <loc>https://iannimuliterno.com/posts/2023-03-models_and_applications/index.html</loc>
@@ -14,6 +14,14 @@
   </url>
   <url>
     <loc>https://iannimuliterno.com/posts/2023-03-lm_python/index.html</loc>
-    <lastmod>2023-03-06T22:25:11.499Z</lastmod>
+    <lastmod>2023-03-11T21:47:56.812Z</lastmod>
+  </url>
+  <url>
+    <loc>https://iannimuliterno.com/posts/2023-03-dectree_python/index.html</loc>
+    <lastmod>2023-03-11T23:50:44.137Z</lastmod>
+  </url>
+  <url>
+    <loc>https://iannimuliterno.com/about.html</loc>
+    <lastmod>2023-03-11T22:52:48.805Z</lastmod>
   </url>
 </urlset>
