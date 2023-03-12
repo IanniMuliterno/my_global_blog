@@ -1,0 +1,599 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>IMuliterno</title>
+<link>https://iannimuliterno.com/index.html</link>
+<atom:link href="https://iannimuliterno.com/index.xml" rel="self" type="application/rss+xml"/>
+<description></description>
+<generator>quarto-1.2.335</generator>
+<lastBuildDate>Tue, 07 Mar 2023 03:00:00 GMT</lastBuildDate>
+<item>
+  <title>Model 2 - Decision Trees in Python with Penguin dataset</title>
+  <dc:creator>I. Muliterno</dc:creator>
+  <link>https://iannimuliterno.com/posts/2023-03-dectree_python/index.html</link>
+  <description><![CDATA[ <p>In our previous post, we discussed linear regression. Today, we will get familiar with decisions trees, but before that, you gotta understand what’s a <strong>classification</strong> <strong>problem</strong>.</p>
+<p>Classification is an important task in machine learning, with numerous applications in fields such as healthcare, finance, and marketing. One popular classification algorithm is decision trees, which use a tree-like model of decisions and their possible consequences to predict the target variable. In this post, we will provide a step-by-step guide to implementing decision trees for classification using Python and the Penguin dataset.</p>
+<section id="decision-trees" class="level3"><h3 class="anchored" data-anchor-id="decision-trees">Decision Trees</h3>
+<p>Decision trees are a type of classification algorithm that use a hierarchical structure to model decisions and their outcomes. They work by partitioning the data into subsets based on the values of the input features, and then recursively dividing each subset into smaller subsets until the target variable is predicted with a high degree of accuracy. Decision trees have several advantages over other classification algorithms, including their interpretability, ability to handle both categorical and numerical data, and flexibility in handling missing values.</p>
+</section><section id="dataset-description" class="level2"><h2 class="anchored" data-anchor-id="dataset-description">Dataset Description</h2>
+<p>The Penguin dataset is a well-known dataset that contains information about the physical characteristics and species of penguins. It consists of 344 samples with 8 input features and 1 target variable (the species of the penguin). In this section, we will describe the structure of the dataset and the importance of data preprocessing in the context of decision trees.</p>
+<p>The first step in any machine learning project is to load and explore the data. To load the Palmer Penguins dataset, we will use the <strong><code>load_penguins</code></strong> function from the <strong><code>palmerpenguins</code></strong> library. We will also import <strong><code>pandas</code></strong> to create a dataframe to store the data, and <strong><code>seaborn</code></strong> and <strong><code>matplotlib</code></strong> to visualize the data.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;">import</span> pandas <span class="im" style="color: #00769E;">as</span> pd</span>
+<span id="cb1-2"><span class="im" style="color: #00769E;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;">as</span> plt</span>
+<span id="cb1-3"><span class="im" style="color: #00769E;">from</span> sklearn.tree <span class="im" style="color: #00769E;">import</span> DecisionTreeClassifier</span>
+<span id="cb1-4"><span class="im" style="color: #00769E;">from</span> sklearn.model_selection <span class="im" style="color: #00769E;">import</span> train_test_split</span>
+<span id="cb1-5"><span class="im" style="color: #00769E;">from</span> sklearn.metrics <span class="im" style="color: #00769E;">import</span> accuracy_score, precision_score, recall_score, confusion_matrix</span>
+<span id="cb1-6"><span class="im" style="color: #00769E;">from</span> sklearn.metrics <span class="im" style="color: #00769E;">import</span> f1_score</span>
+<span id="cb1-7"><span class="im" style="color: #00769E;">from</span> sklearn.tree <span class="im" style="color: #00769E;">import</span> export_graphviz</span>
+<span id="cb1-8"><span class="im" style="color: #00769E;">import</span> graphviz</span>
+<span id="cb1-9"><span class="im" style="color: #00769E;">import</span> seaborn <span class="im" style="color: #00769E;">as</span> sns </span>
+<span id="cb1-10"><span class="im" style="color: #00769E;">from</span> palmerpenguins <span class="im" style="color: #00769E;">import</span> load_penguins</span>
+<span id="cb1-11"><span class="im" style="color: #00769E;">from</span> sklearn.preprocessing <span class="im" style="color: #00769E;">import</span> StandardScaler</span>
+<span id="cb1-12"></span>
+<span id="cb1-13"></span>
+<span id="cb1-14"><span class="im" style="color: #00769E;">import</span> pandas <span class="im" style="color: #00769E;">as</span> pd</span>
+<span id="cb1-15"><span class="im" style="color: #00769E;">import</span> seaborn <span class="im" style="color: #00769E;">as</span> sns </span>
+<span id="cb1-16"><span class="im" style="color: #00769E;">from</span> palmerpenguins <span class="im" style="color: #00769E;">import</span> load_penguins</span>
+<span id="cb1-17">sns.set_style(<span class="st" style="color: #20794D;">'whitegrid'</span>)</span>
+<span id="cb1-18">penguins <span class="op" style="color: #5E5E5E;">=</span> load_penguins()</span>
+<span id="cb1-19">penguins.head()</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  species     island  bill_length_mm  ...  body_mass_g     sex  year
+0  Adelie  Torgersen            39.1  ...       3750.0    male  2007
+1  Adelie  Torgersen            39.5  ...       3800.0  female  2007
+2  Adelie  Torgersen            40.3  ...       3250.0  female  2007
+3  Adelie  Torgersen             NaN  ...          NaN     NaN  2007
+4  Adelie  Torgersen            36.7  ...       3450.0  female  2007
+
+[5 rows x 8 columns]</code></pre>
+</div>
+</div>
+<p>The <strong><code>head</code></strong> function is used to display the first few rows of the dataset. This is useful to check that the data has been loaded correctly and to get a quick overview of the data. Now let’s look for missing values.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"></span>
+<span id="cb3-2"><span class="co" style="color: #5E5E5E;"># Check for missing values</span></span>
+<span id="cb3-3"><span class="bu" style="color: null;">print</span>(penguins.isnull().<span class="bu" style="color: null;">sum</span>())</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>species               0
+island                0
+bill_length_mm        2
+bill_depth_mm         2
+flipper_length_mm     2
+body_mass_g           2
+sex                  11
+year                  0
+dtype: int64</code></pre>
+</div>
+</div>
+<p>we don’t always just drop na, but sckitlearn classifiers aren’t able to handle missing values plus we will lose only a few rows, so let’s take the easy way out here. An alternative could be `filling NA`, but it can be dangerous specially if you rely in simple methods like, just using the average value to fill the gaps. Note that, in the real world, we usually deal with many more missing values and the answer could be trying to enrich the dataset with external information, testing another classification model which can deal with missing values or checking more advanced methods to fill the gaps, how would you like a post about that?</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="co" style="color: #5E5E5E;"># drop missing values </span></span>
+<span id="cb5-2">penguins <span class="op" style="color: #5E5E5E;">=</span> penguins.dropna()</span>
+<span id="cb5-3"><span class="co" style="color: #5E5E5E;"># Double Check for missing values</span></span>
+<span id="cb5-4"><span class="bu" style="color: null;">print</span>(penguins.isnull().<span class="bu" style="color: null;">sum</span>())</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>species              0
+island               0
+bill_length_mm       0
+bill_depth_mm        0
+flipper_length_mm    0
+body_mass_g          0
+sex                  0
+year                 0
+dtype: int64</code></pre>
+</div>
+</div>
+<p>Now that we have checked for missing values, we can visualize the distribution of the target variable using a histogram. In this case, the target variable is the species of the penguin.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="co" style="color: #5E5E5E;"># Plot the distribution of the target variable</span></span>
+<span id="cb7-2">plt.hist(penguins[<span class="st" style="color: #20794D;">'species'</span>])</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(array([146.,   0.,   0.,   0.,   0., 119.,   0.,   0.,   0.,  68.]), array([0. , 0.2, 0.4, 0.6, 0.8, 1. , 1.2, 1.4, 1.6, 1.8, 2. ]), &lt;BarContainer object of 10 artists&gt;)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1">plt.show()</span></code></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://iannimuliterno.com/posts/2023-03-dectree_python/index_files/figure-html/targeteda-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We can see that the dataset contains three species of penguins: Adelie, Chinstrap, and Gentoo.</p>
+<p>Finally, we can use a scatter matrix plot to visualize the pairwise relationships between the features. This is useful to understand the relationships between the features and to identify any potential correlations, or even if there’s a variable worth removing.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><span class="co" style="color: #5E5E5E;"># Plot the pairwise relationships between the features</span></span>
+<span id="cb10-2">sns.pairplot(data<span class="op" style="color: #5E5E5E;">=</span>penguins, hue<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">'species'</span>)</span></code></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://iannimuliterno.com/posts/2023-03-dectree_python/index_files/figure-html/correlation-3.png" class="img-fluid figure-img" width="676"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This is a very revealing plot, we can see, for example, that some features are very correlated, meaning that we could probably remove flipper_length_mm for example, and leave body_mass, because they are correlated, you can see what I’m talking about if you look to the graph at row 3 column 4. We also can see how the features interact with the species of the penguins, look at row 4 column 4, for example and you will find out that most of Gentoo penguins are heavier than the others, this indicates that body mass may be important predictor for our decision tree model.</p>
+<p>Ok, now we’re read to prep the data</p>
+</section><section id="data-preprocessing" class="level1"><h1><strong>Data Preprocessing</strong></h1>
+<p>In this section, we will preprocess our dataset before we move on to the modeling phase. Preprocessing is an important step in machine learning as it involves cleaning, transforming, and engineering the data to make it suitable for modeling.</p>
+<p>First, we make a copy of the original <strong><code>penguins</code></strong> DataFrame, since it’s good practice to keep the original data intact, and define our categorical variables. In our case, the categorical variables are <strong><code>island</code></strong> and <strong><code>sex</code></strong>. We then iterate through each categorical variable and create dummy variables using the <strong><code>pd.get_dummies()</code></strong> function. This creates a binary indicator variable for each possible category. Next, we concatenate the dummy variables with the original DataFrame and drop the original categorical variables.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"></span>
+<span id="cb11-2"><span class="co" style="color: #5E5E5E;"># Make a copy of data_size DataFrame</span></span>
+<span id="cb11-3">data_df <span class="op" style="color: #5E5E5E;">=</span> penguins.copy()</span>
+<span id="cb11-4"></span>
+<span id="cb11-5"><span class="co" style="color: #5E5E5E;"># Define categorical variables</span></span>
+<span id="cb11-6">cat_vars <span class="op" style="color: #5E5E5E;">=</span> [<span class="st" style="color: #20794D;">'island'</span>, <span class="st" style="color: #20794D;">'sex'</span>]</span>
+<span id="cb11-7"></span>
+<span id="cb11-8"><span class="co" style="color: #5E5E5E;"># Iterate through categorical variables and create dummy variables</span></span>
+<span id="cb11-9">dummy_vars <span class="op" style="color: #5E5E5E;">=</span> []</span>
+<span id="cb11-10"><span class="cf" style="color: #003B4F;">for</span> var <span class="kw" style="color: #003B4F;">in</span> cat_vars:</span>
+<span id="cb11-11">    dummy_var <span class="op" style="color: #5E5E5E;">=</span> pd.get_dummies(data_df[var], prefix<span class="op" style="color: #5E5E5E;">=</span>var)</span>
+<span id="cb11-12">    dummy_vars.append(dummy_var)</span>
+<span id="cb11-13">    </span>
+<span id="cb11-14">dummy_df <span class="op" style="color: #5E5E5E;">=</span> pd.concat(dummy_vars, axis<span class="op" style="color: #5E5E5E;">=</span><span class="dv" style="color: #AD0000;">1</span>)</span>
+<span id="cb11-15">data_df <span class="op" style="color: #5E5E5E;">=</span> pd.concat([data_df, dummy_df], axis<span class="op" style="color: #5E5E5E;">=</span><span class="dv" style="color: #AD0000;">1</span>)</span>
+<span id="cb11-16">data_df <span class="op" style="color: #5E5E5E;">=</span> data_df.drop(cat_vars, axis<span class="op" style="color: #5E5E5E;">=</span><span class="dv" style="color: #AD0000;">1</span>)    </span>
+<span id="cb11-17"></span>
+<span id="cb11-18"><span class="co" style="color: #5E5E5E;"># Define final list of variables</span></span>
+<span id="cb11-19">data_final_vars <span class="op" style="color: #5E5E5E;">=</span> [<span class="st" style="color: #20794D;">'bill_length_mm'</span>,<span class="st" style="color: #20794D;">'bill_depth_mm'</span>, <span class="st" style="color: #20794D;">'flipper_length_mm'</span>, <span class="st" style="color: #20794D;">'body_mass_g'</span>, <span class="st" style="color: #20794D;">'island_Biscoe'</span>,</span>
+<span id="cb11-20"> <span class="st" style="color: #20794D;">'island_Dream'</span>, <span class="st" style="color: #20794D;">'sex_female'</span>]</span>
+<span id="cb11-21">y <span class="op" style="color: #5E5E5E;">=</span> penguins[<span class="st" style="color: #20794D;">'species'</span>].values</span>
+<span id="cb11-22">X <span class="op" style="color: #5E5E5E;">=</span> data_df[data_final_vars].values</span></code></pre></div>
+</div>
+<p>We also define our final list of variables, which are the numeric features we will use in our decision tree model. The target variable is defined as <strong><code>y</code></strong> and the independent variables are defined as <strong><code>X</code></strong>.</p>
+<p>Now let us perform scaling on our numeric features using <strong><code>StandardScaler()</code></strong>. This standardizes our numeric features so that each feature has a mean of 0 and standard deviation of 1. This is an important step as decision trees are sensitive to the scale of the features.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"></span>
+<span id="cb12-2"></span>
+<span id="cb12-3"><span class="co" style="color: #5E5E5E;"># Scale the numeric features</span></span>
+<span id="cb12-4">scaler <span class="op" style="color: #5E5E5E;">=</span> StandardScaler()</span>
+<span id="cb12-5">scaled <span class="op" style="color: #5E5E5E;">=</span> scaler.fit_transform(penguins[[<span class="st" style="color: #20794D;">'bill_length_mm'</span>,<span class="st" style="color: #20794D;">'bill_depth_mm'</span>, <span class="st" style="color: #20794D;">'flipper_length_mm'</span>, <span class="st" style="color: #20794D;">'body_mass_g'</span>]])</span>
+<span id="cb12-6">scaled_df <span class="op" style="color: #5E5E5E;">=</span> pd.DataFrame(scaled, columns <span class="op" style="color: #5E5E5E;">=</span> [<span class="st" style="color: #20794D;">'bill_length_mm'</span>,<span class="st" style="color: #20794D;">'bill_depth_mm'</span>, <span class="st" style="color: #20794D;">'flipper_length_mm'</span>, <span class="st" style="color: #20794D;">'body_mass_g'</span>])</span>
+<span id="cb12-7">scaled_df.head()</span>
+<span id="cb12-8"></span>
+<span id="cb12-9"><span class="co" style="color: #5E5E5E;"># Copy the scaled data back to the main dataframe</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g
+0       -0.896042       0.780732          -1.426752    -0.568475
+1       -0.822788       0.119584          -1.069474    -0.506286
+2       -0.676280       0.424729          -0.426373    -1.190361
+3       -1.335566       1.085877          -0.569284    -0.941606
+4       -0.859415       1.747026          -0.783651    -0.692852</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1">data_df[[<span class="st" style="color: #20794D;">'bill_length_mm'</span>,<span class="st" style="color: #20794D;">'bill_depth_mm'</span>, <span class="st" style="color: #20794D;">'flipper_length_mm'</span>, <span class="st" style="color: #20794D;">'body_mass_g'</span>]] <span class="op" style="color: #5E5E5E;">=</span> scaled_df[[<span class="st" style="color: #20794D;">'bill_length_mm'</span>,<span class="st" style="color: #20794D;">'bill_depth_mm'</span>, <span class="st" style="color: #20794D;">'flipper_length_mm'</span>, <span class="st" style="color: #20794D;">'body_mass_g'</span>]]</span>
+<span id="cb14-2">penguins_final <span class="op" style="color: #5E5E5E;">=</span> data_df</span></code></pre></div>
+</div>
+<p>Now we are all set, let’s get to the model.</p>
+<section id="modeling-using-decision-trees" class="level2"><h2 class="anchored" data-anchor-id="modeling-using-decision-trees">Modeling using Decision Trees</h2>
+<p>Now let’s train our decision tree model to predict the species of penguins based on the independent variables we identified in the previous section.</p>
+<p>The first step in model training is to split the dataset into training and testing sets. We used the <strong><code>train_test_split</code></strong> function from scikit-learn library to randomly split the data into 80% for training and 20% for testing. This step is important to ensure that the model is not overfitting to the data, meaning that it is not just memorizing the training data but can generalize well to new, unseen data.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><span class="co" style="color: #5E5E5E;"># Split the data into training and testing sets</span></span>
+<span id="cb15-2">X_train, X_test, y_train, y_test <span class="op" style="color: #5E5E5E;">=</span> train_test_split(X, y, test_size<span class="op" style="color: #5E5E5E;">=</span><span class="fl" style="color: #AD0000;">0.2</span>, random_state<span class="op" style="color: #5E5E5E;">=</span><span class="dv" style="color: #AD0000;">42</span>)</span></code></pre></div>
+</div>
+<p>Next, we built the decision tree model using the <strong><code>DecisionTreeClassifier</code></strong> function from scikit-learn library. We set the maximum depth of the tree to 3 and used a random state of 42 to ensure that our results are reproducible. The <strong><code>max_depth</code></strong> parameter controls the complexity of the tree, and we chose 3 to balance between underfitting and overfitting.</p>
+<p>After building the model, we made predictions on the test set using the <strong><code>predict</code></strong> function of the decision tree classifier. These predictions will be used to evaluate the performance of our model in the next section.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"></span>
+<span id="cb16-2"><span class="co" style="color: #5E5E5E;"># Build the decision tree model</span></span>
+<span id="cb16-3">tree <span class="op" style="color: #5E5E5E;">=</span> DecisionTreeClassifier(max_depth<span class="op" style="color: #5E5E5E;">=</span><span class="dv" style="color: #AD0000;">3</span>, random_state<span class="op" style="color: #5E5E5E;">=</span><span class="dv" style="color: #AD0000;">42</span>)</span>
+<span id="cb16-4">tree.fit(X_train, y_train)</span>
+<span id="cb16-5"></span>
+<span id="cb16-6"><span class="co" style="color: #5E5E5E;"># Make predictions on the test set</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DecisionTreeClassifier(max_depth=3, random_state=42)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1">y_pred <span class="op" style="color: #5E5E5E;">=</span> tree.predict(X_test)</span></code></pre></div>
+</div>
+</section><section id="performance" class="level2"><h2 class="anchored" data-anchor-id="performance">Performance</h2>
+<p>After building our decision tree model, it is important to evaluate its performance. We can use various metrics to evaluate the model, including accuracy, precision, recall, and the confusion matrix. Before getting to the code, let’s understand the metrics.</p>
+<p>The accuracy score tells us the percentage of correctly classified instances out of all instances.</p>
+<p><strong><code>accuracy = (number of correct predictions) / (total number of predictions)</code></strong></p>
+<p>The precision score tells us the percentage of instances that were correctly classified as a certain class out of all instances classified as that class.</p>
+<p><code>Precision = (true positives) / (true positives + false positives)</code></p>
+<p>The recall score tells us the percentage of instances that were correctly classified as a certain class out of all instances of that class.</p>
+<p><code>Recall = (true positives) / (true positives + false negatives)</code></p>
+<p>F1 score is the harmonic mean of precision and recall. It is a measure of the balance between precision and recall and is a useful metric when dealing with imbalanced datasets.</p>
+<p><code>F1 score = 2 * ((precision * recall) / (precision + recall))</code></p>
+<p>In these formulas, true positives are the number of correctly predicted instances of a particular class, false positives are the number of instances that were incorrectly predicted as that class, and false negatives are the number of instances of that class that were incorrectly predicted as another class.</p>
+<p>The confusion matrix is a table that shows the number of true positives, true negatives, false positives, and false negatives for each class.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"></span>
+<span id="cb19-2"><span class="co" style="color: #5E5E5E;"># Evaluate the model</span></span>
+<span id="cb19-3"><span class="bu" style="color: null;">print</span>(<span class="st" style="color: #20794D;">"Accuracy: </span><span class="sc" style="color: #5E5E5E;">{:.2f}</span><span class="st" style="color: #20794D;">%"</span>.<span class="bu" style="color: null;">format</span>(<span class="dv" style="color: #AD0000;">100</span> <span class="op" style="color: #5E5E5E;">*</span> accuracy_score(y_test, y_pred)))</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Accuracy: 97.01%</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><span class="bu" style="color: null;">print</span>(<span class="st" style="color: #20794D;">"Precision: </span><span class="sc" style="color: #5E5E5E;">{:.2f}</span><span class="st" style="color: #20794D;">%"</span>.<span class="bu" style="color: null;">format</span>(<span class="dv" style="color: #AD0000;">100</span> <span class="op" style="color: #5E5E5E;">*</span> precision_score(y_test, y_pred, average<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">'weighted'</span>)))</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Precision: 97.20%</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><span class="bu" style="color: null;">print</span>(<span class="st" style="color: #20794D;">"Recall: </span><span class="sc" style="color: #5E5E5E;">{:.2f}</span><span class="st" style="color: #20794D;">%"</span>.<span class="bu" style="color: null;">format</span>(<span class="dv" style="color: #AD0000;">100</span> <span class="op" style="color: #5E5E5E;">*</span> recall_score(y_test, y_pred, average<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">'weighted'</span>)))</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Recall: 97.01%</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><span class="bu" style="color: null;">print</span>(<span class="st" style="color: #20794D;">"F1 score: </span><span class="sc" style="color: #5E5E5E;">{:.2f}</span><span class="st" style="color: #20794D;">%"</span>.<span class="bu" style="color: null;">format</span>(<span class="dv" style="color: #AD0000;">100</span> <span class="op" style="color: #5E5E5E;">*</span> f1_score(y_test, y_pred, average<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">'macro'</span>)))</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>F1 score: 97.00%</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><span class="bu" style="color: null;">print</span>(<span class="st" style="color: #20794D;">"Confusion Matrix:</span><span class="ch" style="color: #20794D;">\n</span><span class="st" style="color: #20794D;">"</span>, confusion_matrix(y_test, y_pred))</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Confusion Matrix:
+ [[31  0  0]
+ [ 2 16  0]
+ [ 0  0 18]]</code></pre>
+</div>
+</div>
+<p>We can see that our model has an accuracy of 97%, which means it correctly classified 97% of instances. The precision and recall scores are also high, indicating that our model performed well in classifying instances for each class. The confusion matrix provides us with more detailed information about the number of correctly and incorrectly classified instances for each class.</p>
+<p>Let’s take a look at the decision tree we made.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb29" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"></span>
+<span id="cb29-2"><span class="co" style="color: #5E5E5E;"># Visualize the decision tree</span></span>
+<span id="cb29-3">dot_data <span class="op" style="color: #5E5E5E;">=</span> export_graphviz(tree, out_file<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">None</span>, </span>
+<span id="cb29-4">                           feature_names<span class="op" style="color: #5E5E5E;">=</span>data_final_vars,  </span>
+<span id="cb29-5">                           class_names<span class="op" style="color: #5E5E5E;">=</span>[<span class="st" style="color: #20794D;">'Adelie'</span>, <span class="st" style="color: #20794D;">'Chinstrap'</span>, <span class="st" style="color: #20794D;">'Gentoo'</span>],  </span>
+<span id="cb29-6">                           filled<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">True</span>, rounded<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">True</span>,  </span>
+<span id="cb29-7">                           special_characters<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">True</span>)  </span>
+<span id="cb29-8"></span>
+<span id="cb29-9">graph <span class="op" style="color: #5E5E5E;">=</span> graphviz.Source(dot_data)  </span>
+<span id="cb29-10"></span>
+<span id="cb29-11"><span class="co" style="color: #5E5E5E;"># create the plot as a png file on your directory</span></span>
+<span id="cb29-12"><span class="co" style="color: #5E5E5E;">#graph.render("penguins_decision_tree.png") </span></span></code></pre></div>
+</div>
+<p>![](penguins_decision_tree.png){fig-align=“center”}</p>
+<p><strong>![](/posts/2023-03-dectree_python/penguins_decision_tree.png){fig-align=“center”}</strong></p>
+<p>![Allison Horst](https://github.com/allisonhorst/stats-illustrations/blob/main/julie-mine-quarto-keynote/quarto_thankyou.png)</p>
+<p>Each box is called ‘node’, the node shows the rules and the subsets created, it comes together with Gini index, so we can track how pure each node gets.</p>
+<p>Let’s take a better look at the Gini index: <img src="https://latex.codecogs.com/png.latex?%0AGini%20=%201%20-%20%5Csum_%7Bi=1%7D%5Ec%20(p_i)%5E2%0A"></p>
+<p>Where:</p>
+<ul>
+<li><p><img src="https://latex.codecogs.com/png.latex?c"> is the number of classes in the target variable</p></li>
+<li><p><img src="https://latex.codecogs.com/png.latex?p_i"> is the proportion of observations belonging to class i in the node</p></li>
+</ul>
+<p>The Gini index ranges from 0 to 1, where a Gini index of 0 means all observations in the node belong to the same class (pure node), and a Gini index of 1 means that the node contains an equal proportion of observations from each class (impure node). In general, a lower Gini index indicates a better split for the decision tree.</p>
+<p>You got it! We’ve covered a lot of ground in this post, from exploring our dataset and identifying key features, to preprocessing our data and training a decision tree model to predict penguin species. And the best part? Our model performed really well. Next we will talk about random forest, until then, keep coding!</p>
+
+
+</section></section> ]]></description>
+  <category>Machine learning</category>
+  <category>Statistics</category>
+  <category>Data Science</category>
+  <category>Python</category>
+  <category>Classification</category>
+  <guid>https://iannimuliterno.com/posts/2023-03-dectree_python/index.html</guid>
+  <pubDate>Tue, 07 Mar 2023 03:00:00 GMT</pubDate>
+  <media:content url="https://iannimuliterno.com/posts/2023-03-dectree_python/penguins_logo.png" medium="image" type="image/png" height="86" width="144"/>
+</item>
+<item>
+  <title>Model 1 - Linear Regression in Python with Kaggle Data</title>
+  <dc:creator>I. Muliterno</dc:creator>
+  <link>https://iannimuliterno.com/posts/2023-03-lm_python/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>In our previous post, we discussed different modeling approaches and their applications. Today, we will delve deeper into linear regression, one of the most commonly used modeling techniques in data science. By the end, you will learn when to use linear regression and how to code it from start to finish using a dataset from Kaggle.</p>
+<section id="getting-to-know-linear-regression" class="level2">
+<h2 class="anchored" data-anchor-id="getting-to-know-linear-regression">1. Getting to know Linear Regression</h2>
+<p>Linear regression is a popular modeling approach used for predicting continuous values. It is a simple yet powerful modeling approach that <strong>works well when the relationship between the predictor and response variable is linear</strong>. It is important to ensure that the assumptions of linear regression are met, including linearity, independence, normality, and equal variance. These assumptions can be tested using various techniques, such as residual plots and statistical tests. Linear regression models are easy to interpret and can be used for both simple and complex problems.</p>
+<p>Simple linear regression involves a single independent variable, while multiple linear regression involves two or more independent variables. Examples of where linear regression is commonly used include predicting housing prices, analyzing stock prices, and estimating crop yields.</p>
+</section>
+<section id="data-cleaning-and-visualization" class="level2">
+<h2 class="anchored" data-anchor-id="data-cleaning-and-visualization">2. Data Cleaning and Visualization</h2>
+<p>When working with real-world data, it is common to encounter missing or erroneous values, inconsistent formatting, and other issues. Data cleaning is the process of detecting and correcting these problems in the data to ensure that it is accurate and reliable for analysis. Visualization, on the other hand, is the process of representing data in a visual format such as graphs, charts, or maps, to help analysts identify patterns and trends.</p>
+<p>For this blog post, we will be using a data set from Kaggle’s House Prices: Advanced Regression Techniques competition. This data set contains information on various attributes of residential homes in Ames, Iowa, including their sale prices. The goal of the competition is to build a model that can accurately predict the sale prices of homes based on these attributes.</p>
+<p>To start, we will import the necessary libraries in Python, including Pandas for data manipulation and Matplotlib for visualization. We will then load the data set using the read_csv() function from Pandas.</p>
+<div class="cell" data-layout-align="center">
+
+</div>
+<p>Now that we have loaded the data, we can begin the data cleaning process. The first step is to check for missing values in the data. We can use the isnull() function from Pandas to check for missing values and the sum() function to count the number of missing values in each column.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;">import</span> pandas <span class="im" style="color: #00769E;">as</span> pd</span>
+<span id="cb1-2"><span class="im" style="color: #00769E;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;">as</span> plt</span>
+<span id="cb1-3"></span>
+<span id="cb1-4"><span class="co" style="color: #5E5E5E;"># remove the comment to load the dataset</span></span>
+<span id="cb1-5"><span class="co" style="color: #5E5E5E;">#df = pd.read_csv("train.csv")</span></span>
+<span id="cb1-6"></span>
+<span id="cb1-7"><span class="co" style="color: #5E5E5E;"># Check for missing values</span></span>
+<span id="cb1-8">missing_values <span class="op" style="color: #5E5E5E;">=</span> df.isnull().<span class="bu" style="color: null;">sum</span>()</span>
+<span id="cb1-9"><span class="bu" style="color: null;">print</span>(missing_values)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Id                 0
+MSSubClass         0
+MSZoning           0
+LotFrontage      259
+LotArea            0
+                ... 
+MoSold             0
+YrSold             0
+SaleType           0
+SaleCondition      0
+SalePrice          0
+Length: 81, dtype: int64</code></pre>
+</div>
+</div>
+<p>This will give us a count of missing values in each column of the data set. We can then decide how to handle these missing values, depending on the amount of missing data and the nature of the problem. In this case, we will simply drop the columns with more than 50% missing values.</p>
+<p>Next, we can check for any duplicate rows in the data set using the duplicated() function from Pandas. If there are any duplicate rows, we can drop them using the drop_duplicates() function.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"></span>
+<span id="cb3-2"></span>
+<span id="cb3-3"><span class="co" style="color: #5E5E5E;"># Drop columns with more than 50% missing values</span></span>
+<span id="cb3-4">df <span class="op" style="color: #5E5E5E;">=</span> df.dropna(thresh<span class="op" style="color: #5E5E5E;">=</span><span class="bu" style="color: null;">len</span>(df)<span class="op" style="color: #5E5E5E;">*</span><span class="fl" style="color: #AD0000;">0.5</span>, axis<span class="op" style="color: #5E5E5E;">=</span><span class="dv" style="color: #AD0000;">1</span>)</span>
+<span id="cb3-5"></span>
+<span id="cb3-6"><span class="co" style="color: #5E5E5E;"># Check for duplicates</span></span>
+<span id="cb3-7">duplicates <span class="op" style="color: #5E5E5E;">=</span> df.duplicated()</span>
+<span id="cb3-8"><span class="bu" style="color: null;">print</span>(duplicates.<span class="bu" style="color: null;">sum</span>())</span>
+<span id="cb3-9"></span>
+<span id="cb3-10"><span class="co" style="color: #5E5E5E;"># Drop duplicates</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">df <span class="op" style="color: #5E5E5E;">=</span> df.drop_duplicates()</span></code></pre></div>
+</div>
+<p>Now that we have cleaned the data, we can move on to visualization. One common visualization for exploring the relationship between two variables is a scatter plot. We can create a scatter plot of the sale prices and the living area of the homes using Matplotlib.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="co" style="color: #5E5E5E;"># Create a histogram of sale prices</span></span>
+<span id="cb6-2">plt.hist(df[<span class="st" style="color: #20794D;">"SalePrice"</span>], bins<span class="op" style="color: #5E5E5E;">=</span><span class="dv" style="color: #AD0000;">20</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(array([ 22., 126., 380., 343., 229., 144.,  86.,  49.,  28.,  23.,  12.,
+         7.,   3.,   1.,   2.,   1.,   2.,   0.,   0.,   2.]), array([ 34900.,  70905., 106910., 142915., 178920., 214925., 250930.,
+       286935., 322940., 358945., 394950., 430955., 466960., 502965.,
+       538970., 574975., 610980., 646985., 682990., 718995., 755000.]), &lt;BarContainer object of 20 artists&gt;)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1">plt.xlabel(<span class="st" style="color: #20794D;">"Sale Price ($)"</span>)</span>
+<span id="cb8-2">plt.ylabel(<span class="st" style="color: #20794D;">"Frequency"</span>)</span>
+<span id="cb8-3">plt.show()</span></code></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://iannimuliterno.com/posts/2023-03-lm_python/index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This will give us a visual representation of the distribution of sale prices in the data set. We can see that the distribution is skewed to the right, with a few homes having very high sale prices.</p>
+<p>By cleaning and visualizing the data, we can gain a better understanding of its properties and identify any potential issues that may need to be addressed before building a linear regression model.</p>
+</section>
+<section id="building-a-linear-regression-model" class="level2">
+<h2 class="anchored" data-anchor-id="building-a-linear-regression-model">3. Building a Linear Regression Model</h2>
+<p>Now that we have cleaned and visualized the data, we can start building a linear regression model to predict the sale prices of homes based on their attributes. Linear regression is a statistical technique that is commonly used for predicting a numeric value based on one or more input variables. In this case, we will use the input variables in the data set to predict the sale price of each home.</p>
+<p>To start, we will split the data set into a training set and a validation set using the train_test_split() function from Scikit-learn. The training set will be used to train the model, while the validation set will be used to evaluate the model’s performance.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"></span>
+<span id="cb9-2"><span class="im" style="color: #00769E;">from</span> sklearn.model_selection <span class="im" style="color: #00769E;">import</span> train_test_split</span>
+<span id="cb9-3"></span>
+<span id="cb9-4"><span class="co" style="color: #5E5E5E;"># Split the data set into training and validation sets</span></span>
+<span id="cb9-5">train, val <span class="op" style="color: #5E5E5E;">=</span> train_test_split(df, test_size<span class="op" style="color: #5E5E5E;">=</span><span class="fl" style="color: #AD0000;">0.2</span>, random_state<span class="op" style="color: #5E5E5E;">=</span><span class="dv" style="color: #AD0000;">42</span>)</span></code></pre></div>
+</div>
+<p>Next, we will select the input variables that we want to use in the model. In this case, we will use the living area, number of bedrooms, and number of bathrooms as input variables.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><span class="co" style="color: #5E5E5E;"># Select the input variables</span></span>
+<span id="cb10-2">X_train <span class="op" style="color: #5E5E5E;">=</span> train[[<span class="st" style="color: #20794D;">"GrLivArea"</span>, <span class="st" style="color: #20794D;">"BedroomAbvGr"</span>, <span class="st" style="color: #20794D;">"FullBath"</span>]]</span>
+<span id="cb10-3">y_train <span class="op" style="color: #5E5E5E;">=</span> train[<span class="st" style="color: #20794D;">"SalePrice"</span>]</span>
+<span id="cb10-4"></span>
+<span id="cb10-5">X_val <span class="op" style="color: #5E5E5E;">=</span> val[[<span class="st" style="color: #20794D;">"GrLivArea"</span>, <span class="st" style="color: #20794D;">"BedroomAbvGr"</span>, <span class="st" style="color: #20794D;">"FullBath"</span>]]</span>
+<span id="cb10-6">y_val <span class="op" style="color: #5E5E5E;">=</span> val[<span class="st" style="color: #20794D;">"SalePrice"</span>]</span></code></pre></div>
+</div>
+<p>We can then build a linear regression model using the LinearRegression() function from Scikit-learn. We can use it to predict the sale prices of homes in the validation set using the predict() function.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"></span>
+<span id="cb11-2"><span class="im" style="color: #00769E;">from</span> sklearn.linear_model <span class="im" style="color: #00769E;">import</span> LinearRegression</span>
+<span id="cb11-3"></span>
+<span id="cb11-4"><span class="co" style="color: #5E5E5E;"># Build the linear regression model</span></span>
+<span id="cb11-5">model <span class="op" style="color: #5E5E5E;">=</span> LinearRegression()</span>
+<span id="cb11-6">model.fit(X_train, y_train)</span>
+<span id="cb11-7"></span>
+<span id="cb11-8"><span class="co" style="color: #5E5E5E;"># Predict the sale prices of homes in the validation set</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>LinearRegression()</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1">y_pred <span class="op" style="color: #5E5E5E;">=</span> model.predict(X_val)</span></code></pre></div>
+</div>
+<p>To evaluate the performance of the model, we can calculate the mean squared error (MSE) and the coefficient of determination (R-squared) between the predicted sale prices and the actual sale prices in the validation set using the mean_squared_error() and r2_score() functions from Scikit-learn.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><span class="im" style="color: #00769E;">from</span> sklearn.metrics <span class="im" style="color: #00769E;">import</span> mean_squared_error, r2_score</span>
+<span id="cb14-2"></span>
+<span id="cb14-3"><span class="co" style="color: #5E5E5E;"># Calculate the mean squared error and R-squared</span></span>
+<span id="cb14-4">mse <span class="op" style="color: #5E5E5E;">=</span> mean_squared_error(y_val, y_pred)</span>
+<span id="cb14-5">r2 <span class="op" style="color: #5E5E5E;">=</span> r2_score(y_val, y_pred)</span>
+<span id="cb14-6"><span class="bu" style="color: null;">print</span>(<span class="st" style="color: #20794D;">"MSE:"</span>, mse)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>MSE: 2806426667.247853</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><span class="bu" style="color: null;">print</span>(<span class="st" style="color: #20794D;">"R-squared:"</span>, r2)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>R-squared: 0.6341189942328371</code></pre>
+</div>
+</div>
+<p>A low mean squared error and a high coefficient of determination indicate that the model is accurately predicting the sale prices of homes based on their attributes.</p>
+<p>By building a linear regression model, we can use the input variables in the data set to predict the sale prices of homes with a high degree of accuracy. This information can be useful for real estate professionals, home buyers, and sellers looking to estimate the value of a residential property.</p>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>In this post, we have explored the process of using linear regression to predict the sale prices of homes based on their attributes. We started by cleaning and visualizing the data to gain insights into the relationships between the input variables and the sale prices. We then built a linear regression model using the Scikit-learn library and evaluated its performance using the mean squared error and coefficient of determination.</p>
+<p>By following this process, we can make accurate predictions about the sale prices of homes based on their attributes. This information can be valuable for a variety of applications, including real estate valuation, mortgage underwriting, and investment analysis.</p>
+<p>As with any predictive model, it is important to continually evaluate and refine the model over time to ensure that it is accurately predicting the outcome of interest. With continued effort, we can refine our understanding of the relationship between the input variables and the sale prices of homes, and improve the accuracy of our predictions.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Machine learning</category>
+  <category>Statistics</category>
+  <category>Data Science</category>
+  <category>Linear Regression</category>
+  <category>Python</category>
+  <guid>https://iannimuliterno.com/posts/2023-03-lm_python/index.html</guid>
+  <pubDate>Mon, 06 Mar 2023 03:00:00 GMT</pubDate>
+  <media:content url="https://iannimuliterno.com/posts/2023-03-lm_python/housesbanner.png" medium="image" type="image/png" height="25" width="144"/>
+</item>
+<item>
+  <title>Modeling Approaches</title>
+  <dc:creator>Ianní Muliterno</dc:creator>
+  <link>https://iannimuliterno.com/posts/2023-03-models_and_applications/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>As a senior data scientist, one of the key responsibilities is to identify the right modeling approach for a given problem. Different modeling approaches have different strengths and weaknesses, and choosing the right approach is crucial to building an effective and accurate model. This post is the first in a series of posts on modeling approaches, I will discuss the strengths and weaknesses of some popular modeling approaches and when to apply different combinations.</p>
+<p>This post is the first in a series of posts on modeling approaches</p>
+<section id="linear-regression" class="level2">
+<h2 class="anchored" data-anchor-id="linear-regression">1. Linear Regression</h2>
+<p>Linear regression is a popular modeling approach used for predicting continuous values. It is a simple yet powerful modeling approach that works well when the relationship between the predictor and response variable is linear. Linear regression models are easy to interpret and can be used for both simple and complex problems.</p>
+<section id="strengths" class="level3">
+<h3 class="anchored" data-anchor-id="strengths">Strengths:</h3>
+<ul>
+<li><p>Easy to interpret and explain.</p></li>
+<li><p>Works well when the relationship between predictor and response variable is linear.</p></li>
+<li><p>Can handle both simple and complex problems.</p></li>
+</ul>
+</section>
+<section id="weaknesses" class="level3">
+<h3 class="anchored" data-anchor-id="weaknesses">Weaknesses:</h3>
+<ul>
+<li><p>Assumes a linear relationship between predictor and response variable.</p></li>
+<li><p>Sensitive to outliers and multicollinearity.</p></li>
+</ul>
+</section>
+<section id="when-to-use" class="level3">
+<h3 class="anchored" data-anchor-id="when-to-use">When to use:</h3>
+<ul>
+<li><p>When the relationship between predictor and response variable is linear.</p></li>
+<li><p>When the data has few predictors.</p></li>
+<li><p>When the data has no multicollinearity or outliers.</p></li>
+</ul>
+</section>
+</section>
+<section id="decision-trees" class="level2">
+<h2 class="anchored" data-anchor-id="decision-trees">2. Decision Trees</h2>
+<p>Decision trees are a popular modeling approach used for classification and regression. They work by partitioning the data into smaller subsets based on the values of the predictors. Decision trees are easy to interpret and can handle both categorical and continuous predictors. Personally, I prefer to apply only for categorical predictors.</p>
+<section id="strengths-1" class="level3">
+<h3 class="anchored" data-anchor-id="strengths-1">Strengths:</h3>
+<ul>
+<li><p>Easy to interpret and explain.</p></li>
+<li><p>Can handle both categorical and continuous predictors.</p></li>
+<li><p>Can handle interactions between predictors.</p></li>
+</ul>
+</section>
+<section id="weaknesses-1" class="level3">
+<h3 class="anchored" data-anchor-id="weaknesses-1">Weaknesses:</h3>
+<ul>
+<li><p>Can overfit the data.</p></li>
+<li><p>Sensitive to small changes in the data.</p></li>
+</ul>
+</section>
+<section id="when-to-use-1" class="level3">
+<h3 class="anchored" data-anchor-id="when-to-use-1">When to use:</h3>
+<ul>
+<li><p>When the data has many predictors.</p></li>
+<li><p>When the data has interactions between predictors.</p></li>
+<li><p>When the data has both categorical and continuous predictors.</p></li>
+</ul>
+</section>
+</section>
+<section id="random-forests" class="level2">
+<h2 class="anchored" data-anchor-id="random-forests">3. Random Forests</h2>
+<p>Random forests are an extension of decision trees that work by combining multiple decision trees to make a final prediction. They are a popular modeling approach used for classification and regression. Random forests are robust to overfitting and can handle both categorical and continuous predictors.</p>
+<section id="strengths-2" class="level3">
+<h3 class="anchored" data-anchor-id="strengths-2">Strengths:</h3>
+<ul>
+<li><p>Robust to overfitting.</p></li>
+<li><p>Can handle both categorical and continuous predictors.</p></li>
+<li><p>Can handle interactions between predictors.</p></li>
+</ul>
+</section>
+<section id="weaknesses-2" class="level3">
+<h3 class="anchored" data-anchor-id="weaknesses-2">Weaknesses:</h3>
+<ul>
+<li><p>Can be slow to train and predict.</p></li>
+<li><p>Can be difficult to interpret.</p></li>
+</ul>
+</section>
+<section id="when-to-use-2" class="level3">
+<h3 class="anchored" data-anchor-id="when-to-use-2">When to use:</h3>
+<ul>
+<li><p>When the data has many predictors.</p></li>
+<li><p>When the data has interactions between predictors.</p></li>
+<li><p>When the data has both categorical and continuous predictors.</p></li>
+<li><p>When the data has outliers or missing values.</p></li>
+</ul>
+</section>
+</section>
+<section id="neural-networks" class="level2">
+<h2 class="anchored" data-anchor-id="neural-networks">4. Neural Networks</h2>
+<p>Neural networks are a popular modeling approach used for classification and regression. They work by mimicking the structure of the human brain to identify complex patterns in the data. Neural networks are powerful and can handle both linear and nonlinear relationships between predictors and response variables.</p>
+<section id="strengths-3" class="level3">
+<h3 class="anchored" data-anchor-id="strengths-3">Strengths:</h3>
+<ul>
+<li><p>Can handle both linear and nonlinear relationships between predictors and response variables.</p></li>
+<li><p>Can identify complex patterns in the data.</p></li>
+<li><p>Can handle large and complex datasets.</p></li>
+</ul>
+</section>
+<section id="weaknesses-3" class="level3">
+<h3 class="anchored" data-anchor-id="weaknesses-3">Weaknesses:</h3>
+<ul>
+<li><p>Can be slow to train and predict.</p></li>
+<li><p>Can overfit the data.</p></li>
+</ul>
+</section>
+<section id="when-to-use-3" class="level3">
+<h3 class="anchored" data-anchor-id="when-to-use-3">When to use:</h3>
+<ul>
+<li><p>When the data has many predictors.</p></li>
+<li><p>When the data has complex relationships between predictors and response variables.</p></li>
+<li><p>When the data has large and complex datasets.</p></li>
+</ul>
+</section>
+</section>
+<section id="support-vector-machines" class="level2">
+<h2 class="anchored" data-anchor-id="support-vector-machines">5. Support Vector Machines</h2>
+<p>Support Vector Machines (SVMs) are a popular modeling approach used for classification and regression. They work by finding the hyperplane that best separates the data into different classes. SVMs are powerful and can handle both linear and nonlinear relationships between predictors and response variables.</p>
+<section id="strengths-4" class="level3">
+<h3 class="anchored" data-anchor-id="strengths-4">Strengths:</h3>
+<ul>
+<li><p>Can handle both linear and nonlinear relationships between predictors and response variables.</p></li>
+<li><p>Can handle high-dimensional datasets.</p></li>
+<li><p>Can handle outliers.</p></li>
+</ul>
+</section>
+<section id="weaknesses-4" class="level3">
+<h3 class="anchored" data-anchor-id="weaknesses-4">Weaknesses:</h3>
+<ul>
+<li><p>Can be sensitive to the choice of kernel function.</p></li>
+<li><p>Can be slow to train and predict.</p></li>
+</ul>
+</section>
+<section id="when-to-use-4" class="level3">
+<h3 class="anchored" data-anchor-id="when-to-use-4">When to use:</h3>
+<ul>
+<li>When the data has many predictors.</li>
+</ul>
+<!-- -->
+<ul>
+<li><p>When the data has both linear and nonlinear relationships between predictors and response variables.</p></li>
+<li><p>When the data has outliers.</p></li>
+</ul>
+<p>In practice, different modeling approaches may be combined to build more accurate and robust models. For example, a decision tree model may be combined with a random forest model to improve accuracy and reduce overfitting. Or, a linear regression model may be combined with a support vector machine model to handle both linear and nonlinear relationships between predictors and response variables.</p>
+<p>When choosing a modeling approach or combination of approaches, it is important to consider the strengths and weaknesses of each approach in relation to the specific problem at hand. It is also important to consider factors such as the size and complexity of the data, the level of interpretability required, and the computational resources available.</p>
+<p>In summary, there are a variety of modeling approaches that can be used in data science, each with its own strengths and weaknesses. By carefully considering the specific problem at hand and choosing the right combination of modeling approaches, data scientists can build accurate and robust models that provide valuable insights and predictions.</p>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>Machine learning</category>
+  <category>Statistics</category>
+  <category>Data Science</category>
+  <guid>https://iannimuliterno.com/posts/2023-03-models_and_applications/index.html</guid>
+  <pubDate>Wed, 01 Mar 2023 03:00:00 GMT</pubDate>
+</item>
+</channel>
+</rss>

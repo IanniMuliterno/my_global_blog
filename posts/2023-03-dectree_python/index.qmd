@@ -185,7 +185,7 @@ After building our decision tree model, it is important to evaluate its performa
 
 The accuracy score tells us the percentage of correctly classified instances out of all instances.
 
-**`accuracy = (number of correct predictions) / (total number of predictions) = 95/100 = 0.95 = 95%`**
+**`accuracy = (number of correct predictions) / (total number of predictions)`**
 
 The precision score tells us the percentage of instances that were correctly classified as a certain class out of all instances classified as that class.
 
@@ -209,7 +209,7 @@ The confusion matrix is a table that shows the number of true positives, true ne
 print("Accuracy: {:.2f}%".format(100 * accuracy_score(y_test, y_pred)))
 print("Precision: {:.2f}%".format(100 * precision_score(y_test, y_pred, average='weighted')))
 print("Recall: {:.2f}%".format(100 * recall_score(y_test, y_pred, average='weighted')))
-print("F1 score:\n", f1_score(y_test, y_pred, average='macro'))
+print("F1 score: {:.2f}%".format(100 * f1_score(y_test, y_pred, average='macro')))
 
 print("Confusion Matrix:\n", confusion_matrix(y_test, y_pred))
 
@@ -235,6 +235,11 @@ graph = graphviz.Source(dot_data)
 ```
 
 !\[\](penguins_decision_tree.png){fig-align="center"}
+
+**!\[\](/posts/2023-03-dectree_python/penguins_decision_tree.png){fig-align="center"}**
+
+
+!\[Allison Horst\](https://github.com/allisonhorst/stats-illustrations/blob/main/julie-mine-quarto-keynote/quarto_thankyou.png)
 
 Each box is called 'node', the node shows the rules and the subsets created, it comes together with Gini index, so we can track how pure each node gets.
 

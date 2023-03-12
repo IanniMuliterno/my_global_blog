@@ -35,7 +35,7 @@ format:
     footnotes-hover: true
     link-external-icon: true
     link-external-newwindow: true
-    link-external-filter: '^(?:http:|https:)\/\/www\.iannimuliterno\.com\/**'
+    link-external-filter: '^(?:http:|https:)\/\/www\.imuliterno\.com\/**'
     citations-hover: true
     
 editor: visual

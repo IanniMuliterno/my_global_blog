@@ -4,6 +4,8 @@ listing:
   - id: posts
     contents: posts/**/*/index.qmd
     type: default
+    categories: true
+    feed: true
     fields: [image, date, title, subtitle, categories, author, reading-time]
     sort: "date desc"
     #categories: cloud

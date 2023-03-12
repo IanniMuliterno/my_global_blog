@@ -382,7 +382,7 @@ dtype: int64</code></pre>
 </section><section id="performance" class="level2"><h2 class="anchored" data-anchor-id="performance">Performance</h2>
 <p>After building our decision tree model, it is important to evaluate its performance. We can use various metrics to evaluate the model, including accuracy, precision, recall, and the confusion matrix. Before getting to the code, let’s understand the metrics.</p>
 <p>The accuracy score tells us the percentage of correctly classified instances out of all instances.</p>
-<p><strong><code>accuracy = (number of correct predictions) / (total number of predictions) = 95/100 = 0.95 = 95%</code></strong></p>
+<p><strong><code>accuracy = (number of correct predictions) / (total number of predictions)</code></strong></p>
 <p>The precision score tells us the percentage of instances that were correctly classified as a certain class out of all instances classified as that class.</p>
 <p><code>Precision = (true positives) / (true positives + false positives)</code></p>
 <p>The recall score tells us the percentage of instances that were correctly classified as a certain class out of all instances of that class.</p>
@@ -406,10 +406,9 @@ dtype: int64</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Recall: 97.01%</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"F1 score:</span><span class="ch">\n</span><span class="st">"</span>, f1_score(y_test, y_pred, average<span class="op">=</span><span class="st">'macro'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"F1 score: </span><span class="sc">{:.2f}</span><span class="st">%"</span>.<span class="bu">format</span>(<span class="dv">100</span> <span class="op">*</span> f1_score(y_test, y_pred, average<span class="op">=</span><span class="st">'macro'</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>F1 score:
- 0.9699754901960785</code></pre>
+<pre><code>F1 score: 97.00%</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Confusion Matrix:</span><span class="ch">\n</span><span class="st">"</span>, confusion_matrix(y_test, y_pred))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -436,6 +435,8 @@ dtype: int64</code></pre>
 <span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a><span class="co">#graph.render("penguins_decision_tree.png") </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>![](penguins_decision_tree.png){fig-align=“center”}</p>
+<p><strong>![](/posts/2023-03-dectree_python/penguins_decision_tree.png){fig-align=“center”}</strong></p>
+<p>![Allison Horst](https://github.com/allisonhorst/stats-illustrations/blob/main/julie-mine-quarto-keynote/quarto_thankyou.png)</p>
 <p>Each box is called ‘node’, the node shows the rules and the subsets created, it comes together with Gini index, so we can track how pure each node gets.</p>
 <p>Let’s take a better look at the Gini index: <span class="math display">\[
 Gini = 1 - \sum_{i=1}^c (p_i)^2
@@ -581,7 +582,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-      var filterRegex = new RegExp(/^(?:http:|https:)\/\/www\.iannimuliterno\.com\/**/);
+      var filterRegex = new RegExp(/^(?:http:|https:)\/\/www\.imuliterno\.com\/**/);
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href);
     }
