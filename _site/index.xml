@@ -244,9 +244,10 @@ dtype: int64</code></pre>
 <span id="cb29-11"><span class="co" style="color: #5E5E5E;"># create the plot as a png file on your directory</span></span>
 <span id="cb29-12"><span class="co" style="color: #5E5E5E;">#graph.render("penguins_decision_tree.png") </span></span></code></pre></div>
 </div>
-<p>![](penguins_decision_tree.png){fig-align=“center”}</p>
-<p><strong>![](/posts/2023-03-dectree_python/penguins_decision_tree.png){fig-align=“center”}</strong></p>
-<p>![Allison Horst](https://github.com/allisonhorst/stats-illustrations/blob/main/julie-mine-quarto-keynote/quarto_thankyou.png)</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://iannimuliterno.com/posts/2023-03-dectree_python/penguins_decision_tree.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 <p>Each box is called ‘node’, the node shows the rules and the subsets created, it comes together with Gini index, so we can track how pure each node gets.</p>
 <p>Let’s take a better look at the Gini index: <img src="https://latex.codecogs.com/png.latex?%0AGini%20=%201%20-%20%5Csum_%7Bi=1%7D%5Ec%20(p_i)%5E2%0A"></p>
 <p>Where:</p>

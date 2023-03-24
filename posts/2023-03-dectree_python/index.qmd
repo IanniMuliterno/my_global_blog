@@ -234,12 +234,9 @@ graph = graphviz.Source(dot_data)
 #graph.render("penguins_decision_tree.png") 
 ```
 
-!\[\](penguins_decision_tree.png){fig-align="center"}
-
-**!\[\](/posts/2023-03-dectree_python/penguins_decision_tree.png){fig-align="center"}**
+![](penguins_decision_tree.png){fig-align="center"}
 
 
-!\[Allison Horst\](https://github.com/allisonhorst/stats-illustrations/blob/main/julie-mine-quarto-keynote/quarto_thankyou.png)
 
 Each box is called 'node', the node shows the rules and the subsets created, it comes together with Gini index, so we can track how pure each node gets.
 
@@ -256,7 +253,3 @@ Where:
 The Gini index ranges from 0 to 1, where a Gini index of 0 means all observations in the node belong to the same class (pure node), and a Gini index of 1 means that the node contains an equal proportion of observations from each class (impure node). In general, a lower Gini index indicates a better split for the decision tree.
 
 You got it! We've covered a lot of ground in this post, from exploring our dataset and identifying key features, to preprocessing our data and training a decision tree model to predict penguin species. And the best part? Our model performed really well. Next we will talk about random forest, until then, keep coding!
-
-
-
-
