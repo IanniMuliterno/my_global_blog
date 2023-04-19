@@ -2,11 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://iannimuliterno.com/index.html</loc>
-    <lastmod>2023-03-24T20:05:47.695Z</lastmod>
+    <lastmod>2023-04-19T03:39:33.644Z</lastmod>
   </url>
   <url>
     <loc>https://iannimuliterno.com/posts/index.html</loc>
-    <lastmod>2023-03-24T20:05:49.114Z</lastmod>
+    <lastmod>2023-04-19T03:39:35.320Z</lastmod>
   </url>
   <url>
     <loc>https://iannimuliterno.com/posts/2023-03-models_and_applications/index.html</loc>
@@ -23,5 +23,9 @@
   <url>
     <loc>https://iannimuliterno.com/about.html</loc>
     <lastmod>2023-03-11T22:52:48.805Z</lastmod>
+  </url>
+  <url>
+    <loc>https://iannimuliterno.com/posts/2023-04-daily_life_ds/index.html</loc>
+    <lastmod>2023-04-19T03:39:31.669Z</lastmod>
   </url>
 </urlset>

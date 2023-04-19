@@ -71,7 +71,8 @@ ul.task-list li input[type="checkbox"] {
 
     const options = {
       valueNames: ['listing-image','listing-date','listing-title','listing-subtitle','listing-categories','listing-author','listing-reading-time',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
+      page: 3,
+    pagination: { item: "<li class='page-item'><a class='page page-link' href='#'></a></li>" },
       searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
     };
 
@@ -141,7 +142,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#recent-posts" id="toc-recent-posts" class="nav-link active" data-scroll-target="#recent-posts">Recent posts</a></li>
   </ul>
 </nav>
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(3)</span></div><div class="category" data-category="Classification">Classification <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Data Science">Data Science <span class="quarto-category-count">(3)</span></div><div class="category" data-category="Linear Regression">Linear Regression <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Machine learning">Machine learning <span class="quarto-category-count">(3)</span></div><div class="category" data-category="Python">Python <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Statistics">Statistics <span class="quarto-category-count">(3)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(4)</span></div><div class="category" data-category="Classification">Classification <span class="quarto-category-count">(1)</span></div><div class="category" data-category="DDC">DDC <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Data Science">Data Science <span class="quarto-category-count">(4)</span></div><div class="category" data-category="Linear Regression">Linear Regression <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Machine learning">Machine learning <span class="quarto-category-count">(3)</span></div><div class="category" data-category="Python">Python <span class="quarto-category-count">(2)</span></div><div class="category" data-category="R">R <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Statistics">Statistics <span class="quarto-category-count">(3)</span></div><div class="category" data-category="join">join <span class="quarto-category-count">(1)</span></div><div class="category" data-category="merge">merge <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
 <main class="content column-page-left" id="quarto-document-content">
 
@@ -166,7 +167,53 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="recent-posts">Recent posts</h2>
 <div id="listing-posts" class="quarto-listing quarto-listing-container-default">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="Machine learning,Statistics,Data Science,Python,Classification" data-listing-date-sort="1678158000000" data-listing-file-modified-sort="1679688252474" data-listing-reading-time-sort="9.495">
+<div class="quarto-post image-right" data-index="0" data-categories="Data Science,R,DDC,merge,join" data-listing-date-sort="1681786800000" data-listing-file-modified-sort="1681875459277" data-listing-reading-time-sort="2.545">
+<div class="thumbnail">
+<p><a href="./posts/2023-04-daily_life_ds/index.html"> <img src="./posts/2023-04-daily_life_ds/DDC.PNG" class="thumnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./posts/2023-04-daily_life_ds/index.html">
+<h3 class="no-anchor listing-title">
+Data Detective Chronicles: Solving the Puzzles of Daily Data Science
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Data Science'); return false;">
+Data Science
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('R'); return false;">
+R
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('DDC'); return false;">
+DDC
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('merge'); return false;">
+merge
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('join'); return false;">
+join
+</div>
+</div>
+<a href="./posts/2023-04-daily_life_ds/index.html"> </a>
+</div>
+<div class="metadata">
+<a href="./posts/2023-04-daily_life_ds/index.html">
+<div class="listing-date">
+Apr 18, 2023
+</div>
+<div class="listing-author">
+I. Muliterno
+</div>
+<div class="listing-reading-time">
+2 min
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="Machine learning,Statistics,Data Science,Python,Classification" data-listing-date-sort="1678158000000" data-listing-file-modified-sort="1679688252474" data-listing-reading-time-sort="9.495">
 <div class="thumbnail">
 <p><a href="./posts/2023-03-dectree_python/index.html"> <img src="./posts/2023-03-dectree_python/penguins_logo.png" class="thumnail-image"> </a></p>
 </div>
@@ -212,7 +259,7 @@ I. Muliterno
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-categories="Machine learning,Statistics,Data Science,Linear Regression,Python" data-listing-date-sort="1678071600000" data-listing-file-modified-sort="1678150529587" data-listing-reading-time-sort="5.98">
+<div class="quarto-post image-right" data-index="2" data-categories="Machine learning,Statistics,Data Science,Linear Regression,Python" data-listing-date-sort="1678071600000" data-listing-file-modified-sort="1678150529587" data-listing-reading-time-sort="5.98">
 <div class="thumbnail">
 <p><a href="./posts/2023-03-lm_python/index.html"> <img src="./posts/2023-03-lm_python/housesbanner.png" class="thumnail-image"> </a></p>
 </div>
@@ -258,7 +305,7 @@ I. Muliterno
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="2" data-categories="Machine learning,Statistics,Data Science" data-listing-date-sort="1677639600000" data-listing-file-modified-sort="1677735626882" data-listing-reading-time-sort="4.415">
+<div class="quarto-post image-right" data-index="3" data-categories="Machine learning,Statistics,Data Science" data-listing-date-sort="1677639600000" data-listing-file-modified-sort="1677735626882" data-listing-reading-time-sort="4.415">
 <div class="thumbnail">
 <a href="./posts/2023-03-models_and_applications/index.html">
 <div class="thumbnail-image">
@@ -306,6 +353,9 @@ Ianní Muliterno
 <div class="listing-no-matching d-none">
 No matching items
 </div>
+<nav id="posts-pagination" class="listing-pagination" aria-label="Page Navigation">
+  <ul class="pagination"></ul>
+</nav>
 </div>
 <p><a href="../posts/index.html"> <button type="button" class="btn btn-primary float-end btn-sm">See all</button></a></p>
 <p><br></p>
