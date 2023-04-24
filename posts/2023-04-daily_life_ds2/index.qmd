@@ -1,7 +1,7 @@
 ---
 title: "DDC: Tackling Missing or Inconsistent Data"
 author: "I. Muliterno"
-date: "2023-04-18" 
+date: "2023-04-24" 
 categories: 
 # exemplo de categorias:
   - "Data Science"
@@ -30,13 +30,22 @@ In the world of data science, dealing with missing or inconsistent data is an ev
 
 Before diving into any solutions, it's essential to understand the nature of the missing or inconsistent data you're dealing with. In R, you can use the **`summary()`** function to get an overview of your dataset, including the number of missing values:
 
-```{r loading, results='hide'}
-
+```{r loadingpacks, include = FALSE}
 library(dplyr)
 library(stringdist)
 library(tidyverse)
 library(mice)
 library(DMwR2)
+```
+
+```{r loading}
+
+# load these packages
+#library(dplyr)
+#library(stringdist)
+#library(tidyverse)
+#library(mice)
+#library(DMwR2)
 
 dataset <- data.frame(col1 = c(1:3, NA),
                  col2 = c("one", NA,"cool", "text"), 
@@ -66,6 +75,7 @@ dataset <- dataset %>%
 
 imputed_data <- mice(dataset, method = 'norm.predict', m = 5)
 complete_data <- complete(imputed_data)
+complete_data
 ```
 
 -   K-Nearest Neighbours (KNN) imputation: Fill in missing values by averaging the values of the k-nearest neighbours. I will give an example of the code below, but you need a bigger dataset for that approach, that's why the code is commented.
@@ -92,7 +102,7 @@ dataset <- na.omit(dataset)
 
     ```{r}
     column_with_missing_data <- sapply(dataset,function(x)sum(is.na(x)))
-    column_with_missing_data <- column_with_missing_data[column_with_missing_data > 0]
+    column_with_missing_data <- column_with_missing_data[column_with_missing_data == 0]
 
     dataset <- dataset %>% select(-column_with_missing_data)
     dataset
@@ -112,5 +122,3 @@ dataset <- na.omit(dataset)
     ```
 
     Dealing with missing or inconsistent data is a common challenge for data scientists, but it's also an opportunity to refine your skills and improve your dataset's quality. By using R to understand the nature of the missing or inconsistent data and applying appropriate strategies, you can make more informed decisions and produce more accurate and reliable insights. In the next post of our series on data science daily life challenges, we'll explore the intricacies of handling high-dimensional data and the techniques used to simplify analyses using R. Stay tuned!
-
-
