@@ -1,0 +1,96 @@
+---
+  title: "Data Detective Chronicles: Solving the Puzzles of Daily Data Science"
+author: "I. Muliterno"
+date: "2023-04-18" 
+categories: 
+  # exemplo de categorias:
+  - "Data Science"
+- "R"
+- "DDC"
+- "merge"
+- "join"
+image: "DDC.PNG"  
+toc: true # isso habilita o sumário ao lado do post
+#image: "images/logo.png" # imagem usada na página inicial junto ao post
+#bibliography: "pacotes.bib" # arquivo de bibliografia. Pode adicionar mais arquivos!
+draft: false # enquanto estiver draft: true, o post é um rascunho
+knitr: 
+  opts_chunk: 
+  message: true
+warning: false
+echo: true
+fig.align: 'center'
+html:
+  code-fold: true
+---
+  
+  Welcome to the first instalment of my new blog series Data Detective Chronicles (DDC). In this series, we'll explore various daily challenges data scientists face and share practical solutions to overcome them. Today, we'll dive into a common data joining problem that can be both perplexing and frustrating: joining two datasets without a proper key column. We'll walk you through a real-life scenario and demonstrate how to tackle this issue using R.
+
+### The Challenge: Joining Two Datasets Without a Proper Key Column
+
+Imagine you have been given two datasets, table1 and table2, that you need to join for further analysis. Unfortunately, the datasets do not have a proper key column to join on, but they do have two columns with similar information: 'customer_desc' in table1 and 'client_desc' in table2. The catch is that the entries in these columns have slight differences, such as "PRETTY COMMERCE LTDA" in table1 and "PRETTY COM LTDA" in table2. Your task is to find the best way to join these datasets while accounting for these discrepancies.
+
+### Solution: Using String Similarity Measures
+
+In situations like this, one possible solution is to use string similarity measures to join the datasets. A popular measure for string similarity is the Jaro-Winkler distance, which can be easily calculated using the 'stringdist' package in R. Here's a step-by-step guide on how to approach this challenge:
+  
+  1.  Install and load the necessary packages:
+  
+  ```{r loading, results='hide'}
+library(dplyr)
+library(stringdist)
+library(tidyverse)
+library(kableExtra)
+library(knitr)
+```
+
+2.  Create a function to calculate the Jaro-Winkler similarity:
+  
+  ```{r}
+jw_similarity <- function(a, b) {
+  return(1 - stringdist(a, b, method = "jw"))
+}
+```
+
+3.  Perform a cartesian join (cross join) between the two datasets, note I use the variable $key = 1$ to make sure I get all possible combinations between *customer_desc* and *client_desc*, the so called cross join:
+  
+  ```{r}
+table1 <- data.frame(customer_desc = c("PRETTY COMMERCE LTDA", "ANOTHER COMPANY","CORNER SHOP"))
+table2 <- data.frame(client_desc = c("PRETTY COM LTDA", "DIFFERENT COMPANY","CORNER S LTDA"))
+cross_join <- table1 %>%
+  mutate(key = 1) %>%
+  full_join(table2 %>% mutate(key = 1), by = "key") %>%
+  select(-key)
+cross_join %>%
+  kable("html", caption = "Cross Join Table", align = "c") %>%
+  kable_styling("striped", full_width = F) %>%
+  column_spec(1, bold = T, color = "grey") %>%
+  column_spec(2, bold = T, color = "red")
+```
+
+4.  Calculate the Jaro-Winkler similarity between 'customer_desc' and 'client_desc' columns:
+  
+  ```{r}
+cross_join <- cross_join %>%
+  mutate(similarity = mapply(jw_similarity, customer_desc, client_desc))
+```
+
+5.  Filter the best matches based on a similarity threshold or the highest similarity value:
+  
+  ```{r}
+threshold <- 0.78
+matched_data <- cross_join %>%
+  filter(similarity >= threshold) %>%
+  group_by(customer_desc) %>%
+  top_n(1, wt = similarity) %>%
+  ungroup()
+matched_data
+```
+
+In this example, we've successfully joined the two datasets based on the Jaro-Winkler similarity between the 'customer_desc' and 'client_desc' columns. Keep in mind that the similarity threshold may need to be adjusted depending on your specific use case.
+
+## Conclusion
+
+Joining datasets without a proper key column can be a challenging task for data scientists. However, by using string similarity measures like the Jaro-Winkler distance, you can tackle this issue and find the best matches between columns with slight discrepancies. Stay tuned for the next instalment of our series, where we will continue to explore the daily challenges faced by data scientists and share
+
+See ya!
