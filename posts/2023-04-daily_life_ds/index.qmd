@@ -4,7 +4,7 @@ author: "I. Muliterno"
 date: "2023-04-18" 
 categories: 
   # exemplo de categorias:
-  - "Data Science"
+- "Data Science"
 - "R"
 - "DDC"
 - "merge"
@@ -34,7 +34,7 @@ Imagine you have been given two datasets, table1 and table2, that you need to jo
 
 In situations like this, one possible solution is to use string similarity measures to join the datasets. A popular measure for string similarity is the Jaro-Winkler distance, which can be easily calculated using the 'stringdist' package in R. Here's a step-by-step guide on how to approach this challenge:
 
- 1. Install and load the necessary packages:
+1.  Install and load the necessary packages:
 
 ```{r loadingpacks, include = FALSE}
 library(dplyr)

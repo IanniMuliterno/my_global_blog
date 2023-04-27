@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="I. Muliterno">
 <meta name="dcterms.date" content="2023-04-18">
-<title>IMuliterno - DDC: Tackling Missing or Inconsistent Data</title>
+<title>IMuliterno - Data Detective Chronicles: Solving the Puzzles of Daily Data Science</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -117,9 +117,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit"
   }
-}</script><link rel="stylesheet" href="../../styles.css">
-<meta name="twitter:title" content="IMuliterno - DDC: Tackling Missing or Inconsistent Data">
-<meta name="twitter:description" content="In the world of data science, dealing with missing or inconsistent data is an everyday challenge.">
+}</script><script src="../../site_libs/kePrint-0.0.1/kePrint.js"></script><link href="../../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+<meta name="twitter:title" content="IMuliterno - Data Detective Chronicles: Solving the Puzzles of Daily Data Science">
+<meta name="twitter:description" content="Welcome to the first instalment of my new blog series Data Detective Chronicles (DDC).">
 <meta name="twitter:image" content="https://iannimuliterno.com/posts\2023-04-daily_life_ds\DDC.PNG">
 <meta name="twitter:creator" content="@IanniMuliterno">
 <meta name="twitter:card" content="summary_large_image">
@@ -152,13 +153,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       </div> <!-- /container-fluid -->
     </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">DDC: Tackling Missing or Inconsistent Data</h1>
+      <h1 class="title">Data Detective Chronicles: Solving the Puzzles of Daily Data Science</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">Data Science</div>
                 <div class="quarto-category">R</div>
                 <div class="quarto-category">DDC</div>
-                <div class="quarto-category">missing</div>
-                <div class="quarto-category">inconsistent</div>
+                <div class="quarto-category">merge</div>
+                <div class="quarto-category">join</div>
               </div>
                   </div>
   </div>
@@ -188,176 +189,139 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">On this page</h2>
+   
+  <ul>
+<li><a href="#the-challenge-joining-two-datasets-without-a-proper-key-column" id="toc-the-challenge-joining-two-datasets-without-a-proper-key-column" class="nav-link active" data-scroll-target="#the-challenge-joining-two-datasets-without-a-proper-key-column">The Challenge: Joining Two Datasets Without a Proper Key Column</a></li>
+  <li><a href="#solution-using-string-similarity-measures" id="toc-solution-using-string-similarity-measures" class="nav-link" data-scroll-target="#solution-using-string-similarity-measures">Solution: Using String Similarity Measures</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul></nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content"><p>In the world of data science, dealing with missing or inconsistent data is an everyday challenge. The quality of your insights, predictions, and models heavily depends on the quality of the data you use. In this second post of our series on data science daily life challenges, we’ll explore various strategies for handling missing or inconsistent data using R, and how to make informed decisions about the best approach for your specific situation.</p>
+<main class="content quarto-banner-title-block" id="quarto-document-content"><p>Welcome to the first instalment of my new blog series Data Detective Chronicles (DDC). In this series, we’ll explore various daily challenges data scientists face and share practical solutions to overcome them. Today, we’ll dive into a common data joining problem that can be both perplexing and frustrating: joining two datasets without a proper key column. We’ll walk you through a real-life scenario and demonstrate how to tackle this issue using R.</p>
+<section id="the-challenge-joining-two-datasets-without-a-proper-key-column" class="level3"><h3 class="anchored" data-anchor-id="the-challenge-joining-two-datasets-without-a-proper-key-column">The Challenge: Joining Two Datasets Without a Proper Key Column</h3>
+<p>Imagine you have been given two datasets, table1 and table2, that you need to join for further analysis. Unfortunately, the datasets do not have a proper key column to join on, but they do have two columns with similar information: ‘customer_desc’ in table1 and ‘client_desc’ in table2. The catch is that the entries in these columns have slight differences, such as “PRETTY COMMERCE LTDA” in table1 and “PRETTY COM LTDA” in table2. Your task is to find the best way to join these datasets while accounting for these discrepancies.</p>
+</section><section id="solution-using-string-similarity-measures" class="level3"><h3 class="anchored" data-anchor-id="solution-using-string-similarity-measures">Solution: Using String Similarity Measures</h3>
+<p>In situations like this, one possible solution is to use string similarity measures to join the datasets. A popular measure for string similarity is the Jaro-Winkler distance, which can be easily calculated using the ‘stringdist’ package in R. Here’s a step-by-step guide on how to approach this challenge:</p>
 <ol type="1">
-<li>Understand the nature of the missing or inconsistent data</li>
+<li>Install and load the necessary packages:</li>
 </ol>
-<p>Before diving into any solutions, it’s essential to understand the nature of the missing or inconsistent data you’re dealing with. In R, you can use the <strong><code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code></strong> function to get an overview of your dataset, including the number of missing values:</p>
+<p>2. Create a function to calculate the Jaro-Winkler similarity:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'dplyr'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:stats':
-
-    filter, lag</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:base':
-
-    intersect, setdiff, setequal, union</code></pre>
-</div>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/markvanderloo/stringdist">stringdist</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ forcats   1.0.0     ✔ readr     2.1.4
-✔ ggplot2   3.4.1     ✔ stringr   1.5.0
-✔ lubridate 1.9.2     ✔ tibble    3.1.8
-✔ purrr     1.0.1     ✔ tidyr     1.3.0</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ tidyr::extract() masks stringdist::extract()
-✖ dplyr::filter()  masks stats::filter()
-✖ dplyr::lag()     masks stats::lag()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-</div>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/amices/mice">mice</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'mice'
-
-The following object is masked from 'package:stats':
-
-    filter
-
-The following objects are masked from 'package:base':
-
-    cbind, rbind</code></pre>
-</div>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ltorgo/DMwR2">DMwR2</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Registered S3 method overwritten by 'quantmod':
-  method            from
-  as.zoo.data.frame zoo </code></pre>
-</div>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dataset</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>col1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="cn">NA</span><span class="op">)</span>,</span>
-<span>                 col2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"one"</span>, <span class="cn">NA</span>,<span class="st">"cool"</span>, <span class="st">"text"</span><span class="op">)</span>, </span>
-<span>                 col3 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span><span class="op">)</span>, </span>
-<span>                 col4 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">4.7</span>, <span class="fl">3.2</span>, <span class="cn">NA</span><span class="op">)</span>,</span>
-<span>                 date_column <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2000/1/1"</span>,<span class="st">"2000/2/1"</span> ,<span class="st">"2000/3/1"</span> ,<span class="st">"2023/13/40"</span><span class="op">)</span>,                 stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">jw_similarity</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span> <span class="op">{</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">dataset</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ol start="2" type="1">
-<li>Data Imputation</li>
-</ol>
-<p>One common approach for dealing with missing data is imputation. Imputation involves estimating the missing values based on other available data. Some popular imputation methods in R include:</p>
-<ul>
-<li>Mean, median, or mode imputation: Replace missing values with the mean, median, or mode of the column.</li>
-</ul>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dataset</span> <span class="op">&lt;-</span> <span class="va">dataset</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>col4 <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">col4</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">col4</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, <span class="va">col4</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ul>
-<li>Linear regression imputation: Use a linear regression model to estimate missing values based on other variables in the dataset.</li>
-</ul>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">imputed_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://amices.org/mice/reference/mice.html">mice</a></span><span class="op">(</span><span class="va">dataset</span>, method <span class="op">=</span> <span class="st">'norm.predict'</span>, m <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
- iter imp variable
-  1   1  col1
-  1   2  col1
-  1   3  col1
-  1   4  col1
-  1   5  col1
-  2   1  col1
-  2   2  col1
-  2   3  col1
-  2   4  col1
-  2   5  col1
-  3   1  col1
-  3   2  col1
-  3   3  col1
-  3   4  col1
-  3   5  col1
-  4   1  col1
-  4   2  col1
-  4   3  col1
-  4   4  col1
-  4   5  col1
-  5   1  col1
-  5   2  col1
-  5   3  col1
-  5   4  col1
-  5   5  col1</code></pre>
-</div>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">complete_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/complete.html">complete</a></span><span class="op">(</span><span class="va">imputed_data</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ul>
-<li>K-Nearest Neighbours (KNN) imputation: Fill in missing values by averaging the values of the k-nearest neighbours. I will give an example of the code below, but you need a bigger dataset for that approach, that’s why the code is commented.</li>
-</ul>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#imputed_data &lt;- knnImputation(dataset, k = 5)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>It’s important to note that imputation can introduce bias or distort the underlying data distribution, so it should be used with caution.</p>
-<ol start="3" type="1">
-<li>Removing missing or inconsistent data</li>
-</ol>
-<p>In some cases, it may be appropriate to remove rows or columns containing missing or inconsistent data. This can be done using techniques such as:</p>
-<ul>
-<li>Listwise deletion: Remove any rows containing missing values.</li>
-</ul>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dataset</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">dataset</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ul>
-<li>
-<p>Dropping columns: Remove columns with a high proportion of missing or inconsistent data.</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">column_with_missing_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">dataset</span>,<span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">column_with_missing_data</span> <span class="op">&lt;-</span> <span class="va">column_with_missing_data</span><span class="op">[</span><span class="va">column_with_missing_data</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">]</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="fu">stringdist</span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span>, method <span class="op">=</span> <span class="st">"jw"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">dataset</span> <span class="op">&lt;-</span> <span class="va">dataset</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">column_with_missing_data</span><span class="op">)</span></span>
-<span><span class="va">dataset</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  col1 col2 col3 col4 date_column
-1    1  one TRUE  0.5    2000/1/1
-3    3 cool TRUE  3.2    2000/3/1</code></pre>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<p>Keep in mind that removing data can lead to loss of information and may introduce bias if the data is not missing at random.</p>
-<ol start="4" type="1">
-<li>Data Standardisation and Transformation</li>
-</ol>
-<p>Inconsistent data often results from variations in data entry, formats, or units. To address this issue, you can standardise and transform the data using R functions like:</p>
-<ul>
-<li>Establishing consistent formats for dates ( in case it is of type character and there’s inconsistences like “13/40/2023” the return would be NA, so it will help you to recognise inconsistences.</li>
-</ul>
+<p>3. Perform a cartesian join (cross join) between the two datasets, note I use the variable $key = 1$ to make sure I get all possible combinations between *customer_desc* and *client_desc*, the so called cross join:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dataset</span><span class="op">$</span><span class="va">date_column</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="va">dataset</span><span class="op">$</span><span class="va">date_column</span>, format <span class="op">=</span> <span class="st">"%Y/%m/%d"</span><span class="op">)</span></span>
-<span><span class="va">dataset</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">table1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>customer_desc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"PRETTY COMMERCE LTDA"</span>, <span class="st">"ANOTHER COMPANY"</span>,<span class="st">"CORNER SHOP"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">table2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>client_desc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"PRETTY COM LTDA"</span>, <span class="st">"DIFFERENT COMPANY"</span>,<span class="st">"CORNER S LTDA"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">cross_join</span> <span class="op">&lt;-</span> <span class="va">table1</span> <span class="op">%&gt;%</span></span>
+<span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>key <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span></span>
+<span>  <span class="fu">full_join</span><span class="op">(</span><span class="va">table2</span> <span class="op">%&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>key <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, by <span class="op">=</span> <span class="st">"key"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">key</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">cross_join</span> <span class="op">%&gt;%</span></span>
+<span></span>
+<span>  <span class="fu">kable</span><span class="op">(</span><span class="st">"html"</span>, caption <span class="op">=</span> <span class="st">"Cross Join Table"</span>, align <span class="op">=</span> <span class="st">"c"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span></span>
+<span>  <span class="fu">kable_styling</span><span class="op">(</span><span class="st">"striped"</span>, full_width <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span></span>
+<span>  <span class="fu">column_spec</span><span class="op">(</span><span class="fl">1</span>, bold <span class="op">=</span> <span class="cn">T</span>, color <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span></span>
+<span>  <span class="fu">column_spec</span><span class="op">(</span><span class="fl">2</span>, bold <span class="op">=</span> <span class="cn">T</span>, color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>Cross Join Table</caption>
+ <thead><tr>
+<th style="text-align:center;"> customer_desc </th>
+   <th style="text-align:center;"> client_desc </th>
+  </tr></thead>
+<tbody>
+<tr>
+<td style="text-align:center;font-weight: bold;color: grey !important;"> PRETTY COMMERCE LTDA </td>
+   <td style="text-align:center;font-weight: bold;color: red !important;"> PRETTY COM LTDA </td>
+  </tr>
+<tr>
+<td style="text-align:center;font-weight: bold;color: grey !important;"> PRETTY COMMERCE LTDA </td>
+   <td style="text-align:center;font-weight: bold;color: red !important;"> DIFFERENT COMPANY </td>
+  </tr>
+<tr>
+<td style="text-align:center;font-weight: bold;color: grey !important;"> PRETTY COMMERCE LTDA </td>
+   <td style="text-align:center;font-weight: bold;color: red !important;"> CORNER S LTDA </td>
+  </tr>
+<tr>
+<td style="text-align:center;font-weight: bold;color: grey !important;"> ANOTHER COMPANY </td>
+   <td style="text-align:center;font-weight: bold;color: red !important;"> PRETTY COM LTDA </td>
+  </tr>
+<tr>
+<td style="text-align:center;font-weight: bold;color: grey !important;"> ANOTHER COMPANY </td>
+   <td style="text-align:center;font-weight: bold;color: red !important;"> DIFFERENT COMPANY </td>
+  </tr>
+<tr>
+<td style="text-align:center;font-weight: bold;color: grey !important;"> ANOTHER COMPANY </td>
+   <td style="text-align:center;font-weight: bold;color: red !important;"> CORNER S LTDA </td>
+  </tr>
+<tr>
+<td style="text-align:center;font-weight: bold;color: grey !important;"> CORNER SHOP </td>
+   <td style="text-align:center;font-weight: bold;color: red !important;"> PRETTY COM LTDA </td>
+  </tr>
+<tr>
+<td style="text-align:center;font-weight: bold;color: grey !important;"> CORNER SHOP </td>
+   <td style="text-align:center;font-weight: bold;color: red !important;"> DIFFERENT COMPANY </td>
+  </tr>
+<tr>
+<td style="text-align:center;font-weight: bold;color: grey !important;"> CORNER SHOP </td>
+   <td style="text-align:center;font-weight: bold;color: red !important;"> CORNER S LTDA </td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>4. Calculate the Jaro-Winkler similarity between ‘customer_desc’ and ‘client_desc’ columns:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">cross_join</span> <span class="op">&lt;-</span> <span class="va">cross_join</span> <span class="op">%&gt;%</span></span>
+<span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>similarity <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mapply.html">mapply</a></span><span class="op">(</span><span class="va">jw_similarity</span>, <span class="va">customer_desc</span>, <span class="va">client_desc</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>5. Filter the best matches based on a similarity threshold or the highest similarity value:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">threshold</span> <span class="op">&lt;-</span> <span class="fl">0.78</span></span>
+<span></span>
+<span><span class="va">matched_data</span> <span class="op">&lt;-</span> <span class="va">cross_join</span> <span class="op">%&gt;%</span></span>
+<span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">similarity</span> <span class="op">&gt;=</span> <span class="va">threshold</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span></span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">customer_desc</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span></span>
+<span>  <span class="fu">top_n</span><span class="op">(</span><span class="fl">1</span>, wt <span class="op">=</span> <span class="va">similarity</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span></span>
+<span>  <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">matched_data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  col1 col2 col3 col4 date_column
-1    1  one TRUE  0.5  2000-01-01
-3    3 cool TRUE  3.2  2000-03-01</code></pre>
+<pre><code># A tibble: 2 × 3
+  customer_desc        client_desc     similarity
+  &lt;chr&gt;                &lt;chr&gt;                &lt;dbl&gt;
+1 PRETTY COMMERCE LTDA PRETTY COM LTDA      0.917
+2 CORNER SHOP          CORNER S LTDA        0.781</code></pre>
 </div>
 </div>
-<p>Dealing with missing or inconsistent data is a common challenge for data scientists, but it’s also an opportunity to refine your skills and improve your dataset’s quality. By using R to understand the nature of the missing or inconsistent data and applying appropriate strategies, you can make more informed decisions and produce more accurate and reliable insights. In the next post of our series on data science daily life challenges, we’ll explore the intricacies of handling high-dimensional data and the techniques used to simplify analyses using R. Stay tuned!</p>
-</li>
-</ul>
+<p>In this example, we’ve successfully joined the two datasets based on the Jaro-Winkler similarity between the ‘customer_desc’ and ‘client_desc’ columns. Keep in mind that the similarity threshold may need to be adjusted depending on your specific use case.</p>
+</section><section id="conclusion" class="level2"><h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>Joining datasets without a proper key column can be a challenging task for data scientists. However, by using string similarity measures like the Jaro-Winkler distance, you can tackle this issue and find the best matches between columns with slight discrepancies. Stay tuned for the next instalment of our series, where we will continue to explore the daily challenges faced by data scientists and share</p>
+<p>See ya!</p>
 
 
-
-</main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
