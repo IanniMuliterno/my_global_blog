@@ -7,7 +7,7 @@ categories:
 - "Data Science"
 - "R"
 - "random forest"
-- "machine learning"
+- "Machine Learning"
 image: "dataset-cover.png"  
 toc: true # isso habilita o sumário ao lado do post
 #image: "images/logo.png" # imagem usada na página inicial junto ao post
