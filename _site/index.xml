@@ -10,7 +10,155 @@
 <atom:link href="https://iannimuliterno.com/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.2.335</generator>
-<lastBuildDate>Sun, 28 May 2023 03:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 20 Nov 2023 03:00:00 GMT</lastBuildDate>
+<item>
+  <title>Text mining on Harry Potter dialogues</title>
+  <dc:creator>I. Muliterno</dc:creator>
+  <link>https://iannimuliterno.com/posts/2023-11-textmining/index.html</link>
+  <description><![CDATA[ <p>Welcome to our latest exploration in the world of data science. Following our previous discussions on machine learning models, we now delve into the fascinating realm of text analysis using R. In this post, we’ll apply various R packages to analyze character dialogues from a fictional dataset. Our goal is to uncover insights such as the most mentioned characters, frequent greetings, and the characteristics of dialogues. Let’s dive into the script and interpret our findings.</p>
+<p><strong>Understanding the Dataset</strong></p>
+<p>We have a JSON file containing dialogues from different sessions, aquired <a href="https://nuochenpku.github.io/HPD.github.io/index.html">here</a> . To extract meaningful insights, we first load and process the data using <strong><code>tidyverse</code></strong> and <strong><code>tidytext</code></strong> packages in R. The dataset is a treasure trove of dialogues, each offering a unique glimpse into the interactions between characters.</p>
+<p><strong>Data Preparation and Exploration</strong> With our data loaded, we proceed to clean and structure it for analysis. We utilize functions like <strong><code>str_split_fixed</code></strong> to separate the dialogues into character names and their corresponding lines. This meticulous process sets the stage for deeper analysis, allowing us to delve into the intricacies of each dialogue.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">hpd</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;">fromJSON</span><span class="op" style="color: #5E5E5E;">(</span>file<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"en_train_set.json"</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span></span>
+<span><span class="va" style="color: #111111;">extracted_dialogue</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;">map</span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">hpd</span>, <span class="va" style="color: #111111;">pluck</span>, <span class="st" style="color: #20794D;">"dialogue"</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="va" style="color: #111111;">session_names</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">extracted_dialogue</span><span class="op" style="color: #5E5E5E;">)</span>, </span>
+<span>                     times <span class="op" style="color: #5E5E5E;">=</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">extracted_dialogue</span>, <span class="va" style="color: #111111;">length</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span></span>
+<span> <span class="va" style="color: #111111;">dialog_tb</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;">str_split_fixed</span><span class="op" style="color: #5E5E5E;">(</span>string <span class="op" style="color: #5E5E5E;">=</span> <span class="fu" style="color: #4758AB;">tibble</span><span class="op" style="color: #5E5E5E;">(</span></span>
+<span>   dialogue <span class="op" style="color: #5E5E5E;">=</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">extracted_dialogue</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span> <span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">dialogue</span>,</span>
+<span> pattern <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">':'</span>,n<span class="op" style="color: #5E5E5E;">=</span><span class="fl" style="color: #AD0000;">2</span><span class="op" style="color: #5E5E5E;">)</span> <span class="op" style="color: #5E5E5E;">|&gt;</span> </span>
+<span>   <span class="fu" style="color: #4758AB;">as_tibble</span><span class="op" style="color: #5E5E5E;">(</span><span class="op" style="color: #5E5E5E;">)</span> <span class="op" style="color: #5E5E5E;">|&gt;</span> </span>
+<span>   <span class="fu" style="color: #4758AB;">mutate</span><span class="op" style="color: #5E5E5E;">(</span>session <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">session_names</span>,</span>
+<span>          V1 <span class="op" style="color: #5E5E5E;">=</span> <span class="fu" style="color: #4758AB;">str_trim</span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">V1</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span> <span class="op" style="color: #5E5E5E;">|&gt;</span> </span>
+<span>   <span class="fu" style="color: #4758AB;">select</span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">session</span>, charac <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">V1</span>, dialog <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">V2</span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
+</div>
+<p><strong>Insights from the Data</strong></p>
+<ol type="1">
+<li>
+<p><strong>Most Mentioned Characters</strong>: We quantify the presence of each character in the dialogues. By counting mentions, we identify the characters that dominate the conversations, offering insights into their importance or prominence in the narrative.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span> <span class="va" style="color: #111111;">character_mentions</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">dialog_tb</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">charac</span><span class="op" style="color: #5E5E5E;">)</span>, <span class="kw" style="color: #003B4F;">function</span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">char</span><span class="op" style="color: #5E5E5E;">)</span> <span class="op" style="color: #5E5E5E;">{</span></span>
+<span>   <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="fu" style="color: #4758AB;">str_detect</span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">dialog_tb</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">dialog</span>, <span class="fu" style="color: #4758AB;">fixed</span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">char</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span> <span class="op" style="color: #5E5E5E;">}</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span></span>
+<span> <span class="co" style="color: #5E5E5E;"># Creating a data frame for the results</span></span>
+<span> <span class="va" style="color: #111111;">mentions_df</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op" style="color: #5E5E5E;">(</span>charac <span class="op" style="color: #5E5E5E;">=</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">dialog_tb</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">charac</span><span class="op" style="color: #5E5E5E;">)</span>,</span>
+<span>                           mentions <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">character_mentions</span><span class="op" style="color: #5E5E5E;">)</span> <span class="op" style="color: #5E5E5E;">|&gt;</span> </span>
+<span>   <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">charac</span> <span class="op" style="color: #5E5E5E;">!=</span> <span class="st" style="color: #20794D;">"hat"</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span></span>
+<span> <span class="co" style="color: #5E5E5E;"># Displaying the results</span></span>
+<span> <span class="va" style="color: #111111;">mentions_df</span> <span class="op" style="color: #5E5E5E;">|&gt;</span> </span>
+<span>   <span class="fu" style="color: #4758AB;">arrange</span><span class="op" style="color: #5E5E5E;">(</span><span class="fu" style="color: #4758AB;">desc</span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">mentions</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span> <span class="op" style="color: #5E5E5E;">|&gt;</span> </span>
+<span>   <span class="fu" style="color: #4758AB;">slice</span><span class="op" style="color: #5E5E5E;">(</span><span class="fl" style="color: #AD0000;">1</span><span class="op" style="color: #5E5E5E;">:</span><span class="fl" style="color: #AD0000;">20</span><span class="op" style="color: #5E5E5E;">)</span> <span class="op" style="color: #5E5E5E;">|&gt;</span> </span>
+<span>   <span class="fu" style="color: #4758AB;">ggplot</span><span class="op" style="color: #5E5E5E;">(</span><span class="fu" style="color: #4758AB;">aes</span><span class="op" style="color: #5E5E5E;">(</span>y <span class="op" style="color: #5E5E5E;">=</span>  <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/reorder.factor.html">reorder</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">charac</span>, <span class="op" style="color: #5E5E5E;">-</span><span class="va" style="color: #111111;">mentions</span><span class="op" style="color: #5E5E5E;">)</span>, x <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">mentions</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span> <span class="op" style="color: #5E5E5E;">+</span></span>
+<span>   <span class="fu" style="color: #4758AB;">geom_bar</span><span class="op" style="color: #5E5E5E;">(</span>stat <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">'identity'</span><span class="op" style="color: #5E5E5E;">)</span> <span class="op" style="color: #5E5E5E;">+</span></span>
+<span>   <span class="fu" style="color: #4758AB;">ggtitle</span><span class="op" style="color: #5E5E5E;">(</span><span class="st" style="color: #20794D;">'Character mentions'</span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://iannimuliterno.com/posts/2023-11-textmining/index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</li>
+<li>
+<p><strong>Frequent Greetings</strong>: The essence of initial interactions is captured by analyzing common greetings like “Hello”, “Hi”, and others. This reveals the nature of interactions and the formality or informality within the dialogues.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">greetings</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="st" style="color: #20794D;">"Hello"</span>, <span class="st" style="color: #20794D;">"Hi"</span>, <span class="st" style="color: #20794D;">"Greetings"</span>, <span class="st" style="color: #20794D;">"Hey"</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;"># Extracting greetings from dialogues</span></span>
+<span><span class="va" style="color: #111111;">greetings_found</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">greetings</span>, <span class="kw" style="color: #003B4F;">function</span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">greet</span><span class="op" style="color: #5E5E5E;">)</span> <span class="op" style="color: #5E5E5E;">{</span></span>
+<span>    <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="fu" style="color: #4758AB;">str_extract_all</span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">dialog_tb</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">dialog</span>, <span class="fu" style="color: #4758AB;">fixed</span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">greet</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="op" style="color: #5E5E5E;">}</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;"># Displaying the results</span></span>
+<span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">greetings_found</span>,<span class="va" style="color: #111111;">length</span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$Hello
+[1] 41
+
+$Hi
+[1] 147
+
+$Greetings
+[1] 0
+
+$Hey
+[1] 41</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p><strong>What’s the longest dialogue?</strong></p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span> <span class="co" style="color: #5E5E5E;"># Calculating the length of each dialogue</span></span>
+<span> <span class="va" style="color: #111111;">dialog_tb</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">length</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;">str_length</span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">dialog_tb</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">dialog</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span></span>
+<span> <span class="co" style="color: #5E5E5E;"># Identifying the longest dialogue</span></span>
+<span> <span class="va" style="color: #111111;">longest_dialogue</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="va" style="color: #111111;">dialog_tb</span> <span class="op" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span>   <span class="fu" style="color: #4758AB;">arrange</span><span class="op" style="color: #5E5E5E;">(</span><span class="fu" style="color: #4758AB;">desc</span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">length</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span> <span class="op" style="color: #5E5E5E;">%&gt;%</span></span>
+<span>   <span class="fu" style="color: #4758AB;">slice</span><span class="op" style="color: #5E5E5E;">(</span><span class="fl" style="color: #AD0000;">1</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span></span>
+<span> <span class="co" style="color: #5E5E5E;"># Displaying the result</span></span>
+<span> <span class="va" style="color: #111111;">longest_dialogue</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">dialog</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] " Then you should, You know the secret of my sister’s ill health, what those Muggles did, what she became. You know how my poor father sought revenge, and paid the price, died in Azkaban. You know how my mother gave up her own life to care for Ariana. Harry. I was gifted, I was brilliant. I wanted to escape. I wanted to shine. I wanted glory. Do not misunderstand me, I loved them. I loved my parents, I loved my brother and my sister, but I was selfish, Harry, more selfish than you, who are a remarkably selfless person, could possibly imagine. So that, when my mother died, and I was left the responsibility of a damaged sister and a wayward brother, I returned to my village in anger and bitterness. Trapped and wasted, I thought! And then, of course, he came. . . . Grindelwald. You cannot imagine how his ideas caught me, Harry, inflamed me. Muggles forced into subservience. We wizards triumphant. Grindelwald and I, the glorious young leaders of the revolution. Oh, I had a few scruples. I assuaged my conscience with empty words. It would all be for the greater good, and any harm done would be repaid a hundredfold in benefits for wizards. Did I know, in my heart of hearts, what Gellert Grindelwald was? I think I did, but I closed my eyes. If the plans we were making came to fruition, all my dreams would come true. And at the heart of our schemes, the Deathly Hallows! How they fascinated him, how they fascinated both of us! The unbeatable wand, the weapon that would lead us to power! The Resurrection Stone — to him, though I pretended not to know it, it meant an army of Inferi! To me, I confess, it meant the return of my parents, and the lifting of all responsibility from my shoulders. Harry. I thought that, if we ever found it, it might be useful in hiding Ariana, but our interest in the Cloak was mainly that it completed the trio, for the legend said that the man who united all three objects would then be truly master of death, which we took to mean ‘invincible. ’ Invincible masters of death, Grindelwald and Dumbledore! Two months of insanity, of cruel dreams, and neglect of the only two members of my family left to me. You know what happened. Reality returned in the form of my rough, unlettered, and infinitely more admirable brother. I did not want to hear the truths he shouted at me. I did not want to hear that I could not set forth to seek Hallows with a fragile and unstable sister in tow. The argument became a fight. Grindelwald lost control. That which I had always sensed in him, though I pretended not to, now sprang into terrible being.  And Ariana .. . after all my mother’s care and caution . . . lay dead upon the floor. Well, Grindelwald fled, as anyone but I could have predicted. He vanished, with his plans for seizing power, and his schemes for Muggle torture, and his dreams of the Deathly Hallows, dreams in which I had encouraged him and helped him. He ran, while I was left to bury my sister, and learn to live with my guilt and my terrible grief, the price of my shame. Years passed. There were rumors about him. They said he had procured a wand of immense power. I, meanwhile, was offered the post of Minister of Magic, not once, but several times. Naturally, I refused. I had learned that I was not to be trusted with power."</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p><strong>Dialogue Dynamics</strong>: We explore the dialogues’ nature by identifying the frequency of questions and the length of dialogues. It tells us about the conversational style and the depth of discussions among characters.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;"># Counting dialogues that contain questions</span></span>
+<span> <span class="va" style="color: #111111;">question_dialogues_count</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="fu" style="color: #4758AB;">str_detect</span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">dialog_tb</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">dialog</span>, <span class="fu" style="color: #4758AB;">fixed</span><span class="op" style="color: #5E5E5E;">(</span><span class="st" style="color: #20794D;">"?"</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span></span>
+<span> <span class="co" style="color: #5E5E5E;"># Displaying the count</span></span>
+<span>  <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op" style="color: #5E5E5E;">(</span> <span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">question_dialogues_count</span><span class="op" style="color: #5E5E5E;">/</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">dialog_tb</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">*</span><span class="fl" style="color: #AD0000;">100</span>, <span class="st" style="color: #20794D;">"% of all dialogues are questions"</span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>35.38782 % of all dialogues are questions</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p><strong>Comparative Analysis</strong>: A fun aspect is comparing how often different characters mention specific terms, like how often Ron mentions “Harry” compared to Hermione. It adds a layer of relational dynamics to our analysis.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span> <span class="co" style="color: #5E5E5E;"># Count ron's mentions of "harry"</span></span>
+<span> <span class="va" style="color: #111111;">ron_mentions_potter</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="fu" style="color: #4758AB;">str_detect</span><span class="op" style="color: #5E5E5E;">(</span></span>
+<span>   <span class="va" style="color: #111111;">dialog_tb</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">dialog</span><span class="op" style="color: #5E5E5E;">[</span><span class="va" style="color: #111111;">dialog_tb</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">charac</span> <span class="op" style="color: #5E5E5E;">==</span> <span class="st" style="color: #20794D;">"Ron"</span><span class="op" style="color: #5E5E5E;">]</span>, <span class="st" style="color: #20794D;">"Harry"</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span></span>
+<span> <span class="co" style="color: #5E5E5E;"># Count Hermione's mentions of "Harry"</span></span>
+<span> <span class="va" style="color: #111111;">hermione_mentions_harry</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="fu" style="color: #4758AB;">str_detect</span><span class="op" style="color: #5E5E5E;">(</span></span>
+<span>   <span class="va" style="color: #111111;">dialog_tb</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">dialog</span><span class="op" style="color: #5E5E5E;">[</span><span class="va" style="color: #111111;">dialog_tb</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">charac</span> <span class="op" style="color: #5E5E5E;">==</span> <span class="st" style="color: #20794D;">"Hermione"</span><span class="op" style="color: #5E5E5E;">]</span>, <span class="st" style="color: #20794D;">"Harry"</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span></span>
+<span> <span class="co" style="color: #5E5E5E;"># Displaying the results</span></span>
+<span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="st" style="color: #20794D;">"Ron mentions 'Harry':"</span>, <span class="va" style="color: #111111;">ron_mentions_potter</span>, <span class="st" style="color: #20794D;">"times\n"</span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Ron mentions 'Harry': 149 times</code></pre>
+</div>
+<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="st" style="color: #20794D;">"Hermione mentions 'Harry':"</span>, <span class="va" style="color: #111111;">hermione_mentions_harry</span>, <span class="st" style="color: #20794D;">"times"</span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Hermione mentions 'Harry': 390 times</code></pre>
+</div>
+</div>
+</li>
+</ol>
+<p><strong>Visual Representation and Conclusion</strong> Our findings are not just about numbers and text; we bring them to life through visualizations like bar graphs and tables. These visual aids help us to quickly grasp the essence of our analysis, making the data more accessible and comprehensible.</p>
+<p>Stay tuned</p>
+
+
+
+ ]]></description>
+  <category>Data Science</category>
+  <category>R</category>
+  <category>Harry Potter</category>
+  <category>text mining</category>
+  <guid>https://iannimuliterno.com/posts/2023-11-textmining/index.html</guid>
+  <pubDate>Mon, 20 Nov 2023 03:00:00 GMT</pubDate>
+  <media:content url="https://iannimuliterno.com/posts/2023-11-textmining/hpd.png" medium="image" type="image/png" height="144" width="144"/>
+</item>
 <item>
   <title>Model 3 - Random Forest in R with Breast Cancer Wisconsin (Diagnostic) dataset</title>
   <dc:creator>I. Muliterno</dc:creator>

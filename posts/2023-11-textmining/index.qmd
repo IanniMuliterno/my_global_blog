@@ -1,0 +1,139 @@
+---
+title: "Text mining on Harry Potter dialogues"
+author: "I. Muliterno"
+date: "2023-11-20" 
+categories: 
+# exemplo de categorias:
+  - "Data Science"
+  - "R"
+  - "Harry Potter"
+  - "text mining"
+image: "hpd.png"  
+toc: true # isso habilita o sumário ao lado do post
+#image: "images/logo.png" # imagem usada na página inicial junto ao post
+#bibliography: "pacotes.bib" # arquivo de bibliografia. Pode adicionar mais arquivos!
+draft: false # enquanto estiver draft: true, o post é um rascunho
+knitr: 
+  opts_chunk: 
+    message: true
+    warning: false
+    echo: true
+    fig.align: 'center'
+html:
+  code-fold: true
+---
+
+Welcome to our latest exploration in the world of data science. Following our previous discussions on machine learning models, we now delve into the fascinating realm of text analysis using R. In this post, we'll apply various R packages to analyze character dialogues from a fictional dataset. Our goal is to uncover insights such as the most mentioned characters, frequent greetings, and the characteristics of dialogues. Let's dive into the script and interpret our findings.
+
+```{r include = FALSE}
+library(tidyverse)
+library(tidytext)
+library(rjson)
+```
+
+**Understanding the Dataset**
+
+We have a JSON file containing dialogues from different sessions, aquired [here](https://nuochenpku.github.io/HPD.github.io/index.html) . To extract meaningful insights, we first load and process the data using **`tidyverse`** and **`tidytext`** packages in R. The dataset is a treasure trove of dialogues, each offering a unique glimpse into the interactions between characters.
+
+**Data Preparation and Exploration** With our data loaded, we proceed to clean and structure it for analysis. We utilize functions like **`str_split_fixed`** to separate the dialogues into character names and their corresponding lines. This meticulous process sets the stage for deeper analysis, allowing us to delve into the intricacies of each dialogue.
+
+```{r}
+
+hpd <- fromJSON(file="en_train_set.json")
+
+extracted_dialogue <- map(hpd, pluck, "dialogue")
+session_names <- rep(names(extracted_dialogue), 
+                     times = sapply(extracted_dialogue, length))
+
+ dialog_tb <- str_split_fixed(string = tibble(
+   dialogue = unlist(extracted_dialogue)
+ )$dialogue,
+ pattern = ':',n=2) |> 
+   as_tibble() |> 
+   mutate(session = session_names,
+          V1 = str_trim(V1)) |> 
+   select(session, charac = V1, dialog = V2)
+```
+
+**Insights from the Data**
+
+1.  **Most Mentioned Characters**: We quantify the presence of each character in the dialogues. By counting mentions, we identify the characters that dominate the conversations, offering insights into their importance or prominence in the narrative.
+
+    ```{r}
+     character_mentions <- sapply(unique(dialog_tb$charac), function(char) {
+       sum(str_detect(dialog_tb$dialog, fixed(char)))
+     })
+     
+     # Creating a data frame for the results
+     mentions_df <- data.frame(charac = unique(dialog_tb$charac),
+                               mentions = character_mentions) |> 
+       filter(charac != "hat")
+     
+     # Displaying the results
+     mentions_df |> 
+       arrange(desc(mentions)) |> 
+       slice(1:20) |> 
+       ggplot(aes(y =  reorder(charac, -mentions), x = mentions)) +
+       geom_bar(stat = 'identity') +
+       ggtitle('Character mentions')
+    ```
+
+2.  **Frequent Greetings**: The essence of initial interactions is captured by analyzing common greetings like "Hello", "Hi", and others. This reveals the nature of interactions and the formality or informality within the dialogues.
+
+    ```{r}
+    greetings <- c("Hello", "Hi", "Greetings", "Hey")
+
+    # Extracting greetings from dialogues
+    greetings_found <- sapply(greetings, function(greet) {
+        unlist(str_extract_all(dialog_tb$dialog, fixed(greet)))
+    })
+
+    # Displaying the results
+    lapply(greetings_found,length)
+    ```
+
+3.  **What's the longest dialogue?**
+
+    ```{r}
+     # Calculating the length of each dialogue
+     dialog_tb$length <- str_length(dialog_tb$dialog)
+     
+     # Identifying the longest dialogue
+     longest_dialogue <- dialog_tb %>% 
+       arrange(desc(length)) %>%
+       slice(1)
+     
+     # Displaying the result
+     longest_dialogue$dialog
+    ```
+
+4.  **Dialogue Dynamics**: We explore the dialogues' nature by identifying the frequency of questions and the length of dialogues. It tells us about the conversational style and the depth of discussions among characters.
+
+    ```{r}
+    # Counting dialogues that contain questions
+     question_dialogues_count <- sum(str_detect(dialog_tb$dialog, fixed("?")))
+     
+     # Displaying the count
+      cat( (question_dialogues_count/nrow(dialog_tb))*100, "% of all dialogues are questions")
+    ```
+
+5.  **Comparative Analysis**: A fun aspect is comparing how often different characters mention specific terms, like how often Ron mentions "Harry" compared to Hermione. It adds a layer of relational dynamics to our analysis.
+
+    ```{r}
+
+     # Count ron's mentions of "harry"
+     ron_mentions_potter <- sum(str_detect(
+       dialog_tb$dialog[dialog_tb$charac == "Ron"], "Harry"))
+     
+     # Count Hermione's mentions of "Harry"
+     hermione_mentions_harry <- sum(str_detect(
+       dialog_tb$dialog[dialog_tb$charac == "Hermione"], "Harry"))
+     
+     # Displaying the results
+     cat("Ron mentions 'Harry':", ron_mentions_potter, "times\n")
+     cat("Hermione mentions 'Harry':", hermione_mentions_harry, "times")
+    ```
+
+**Visual Representation and Conclusion** Our findings are not just about numbers and text; we bring them to life through visualizations like bar graphs and tables. These visual aids help us to quickly grasp the essence of our analysis, making the data more accessible and comprehensible.
+
+Stay tuned

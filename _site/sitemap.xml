@@ -2,15 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://iannimuliterno.com/index.html</loc>
-    <lastmod>2023-05-28T16:08:15.574Z</lastmod>
+    <lastmod>2023-11-20T01:51:09.170Z</lastmod>
   </url>
   <url>
     <loc>https://iannimuliterno.com/posts/index.html</loc>
-    <lastmod>2023-05-28T16:08:17.373Z</lastmod>
+    <lastmod>2023-11-20T01:51:25.768Z</lastmod>
   </url>
   <url>
     <loc>https://iannimuliterno.com/posts/2023-03-models_and_applications/index.html</loc>
-    <lastmod>2023-03-02T05:41:11.178Z</lastmod>
+    <lastmod>2023-11-20T01:51:31.706Z</lastmod>
   </url>
   <url>
     <loc>https://iannimuliterno.com/posts/2023-03-lm_python/index.html</loc>
@@ -35,5 +35,9 @@
   <url>
     <loc>https://iannimuliterno.com/posts/2023-05-randomforest/index.html</loc>
     <lastmod>2023-05-28T15:55:28.406Z</lastmod>
+  </url>
+  <url>
+    <loc>https://iannimuliterno.com/posts/2023-11-textmining/index.html</loc>
+    <lastmod>2023-11-20T01:50:33.074Z</lastmod>
   </url>
 </urlset>
