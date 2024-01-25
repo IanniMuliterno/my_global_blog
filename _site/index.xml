@@ -10,7 +10,71 @@
 <atom:link href="https://iannimuliterno.com/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.2.335</generator>
-<lastBuildDate>Mon, 20 Nov 2023 03:00:00 GMT</lastBuildDate>
+<lastBuildDate>Thu, 25 Jan 2024 03:00:00 GMT</lastBuildDate>
+<item>
+  <title>Horse Race and Data Science</title>
+  <dc:creator>I. Muliterno</dc:creator>
+  <link>https://iannimuliterno.com/posts/2024-01-Horse_Race_and_DataScience/index.html</link>
+  <description><![CDATA[ <p>Hello again my friends, I got into a very interesting project while learning how to better work with <code>BeautifulSoup</code>, and I felt like sharing with you. I saw a tutorial and it looked so easy that I decided to find a different table to extract so I could have a better challenge and ended up <a href="http://www.racebase.co.nz/jockthis.htm">here</a>. After <a href="https://github.com/IanniMuliterno/Webscrapping-lesson-with-BeautifulSoup">successfully extracting</a> the jockeys stats table, I wondered “How much people already played with horse racing data?”</p>
+<p>Easy answer: not much, according to <a href="https://en.wikipedia.org/wiki/Horse_racing">wikipedia</a>, only 10 countries host horse racing, and during my research for data, I found info mostly about Australia, New Zealand, Hong Kong and Singapure races.</p>
+<p>Well that means more <code>BeautifulSoup</code> practice for me, right?!</p>
+<p>But before that, I need to understand the horse racing world, I’ve read so many expressions that are completely new to me. Because of that, todays post is aiming to show:</p>
+<section id="what-you-need-to-know-before-going-into-a-horse-race-dataset" class="level2"><h2 class="anchored" data-anchor-id="what-you-need-to-know-before-going-into-a-horse-race-dataset"><strong>What you need to know before going into a horse race dataset</strong></h2>
+<p>To effectively analyze horse race data, there are several key areas one must understand:</p>
+<section id="the-jockeys" class="level3"><h3 class="anchored" data-anchor-id="the-jockeys">1. The Jockeys</h3>
+<p>The jockey is much more than just a rider. Their skill, experience, and even weight play a significant role in the performance of the horse. Understanding a jockey’s track record, including wins, losses, and strategies, can provide valuable insights into future races, and at <a href="https://www.racing.com">raceing</a> I found:</p>
+<p><img src="https://iannimuliterno.com/posts/2024-01-Horse_Race_and_DataScience/jockey_stats.PNG" class="img-fluid"></p>
+</section><section id="the-trainers" class="level3"><h3 class="anchored" data-anchor-id="the-trainers">2. The Trainers</h3>
+<p>Behind every successful horse and jockey is a trainer. Trainers are responsible for preparing the horse for the race, which includes physical training, nutrition, and strategy. Analyzing a trainer’s history, methods, and success rate is crucial for predicting how well a horse might perform.</p>
+<p><img src="https://iannimuliterno.com/posts/2024-01-Horse_Race_and_DataScience/trainer_Stats.PNG" class="img-fluid"></p>
+</section><section id="the-horses" class="level3"><h3 class="anchored" data-anchor-id="the-horses">3. The Horses</h3>
+<p>Each horse has its unique traits - age, breed, lineage, past performance, and more. Some breeds are known for their speed, others for endurance. The lineage can also give clues about a horse’s potential. Understanding these aspects can significantly enhance the analysis of race outcomes. Also, you will see different info from the two above, that’s because each one has a <em>stats</em> and <em>form</em> tab, what you saw above was the stats tab, now lets see the other one.</p>
+<p><img src="https://iannimuliterno.com/posts/2024-01-Horse_Race_and_DataScience/horse_form.PNG" class="img-fluid"></p>
+</section><section id="the-tracks" class="level3"><h3 class="anchored" data-anchor-id="the-tracks">4. The Tracks</h3>
+<p>Racetracks vary widely - in terms of surface (dirt, turf, synthetic), length, and weather conditions. Some horses perform better on certain surfaces or track lengths. The condition of the track on race day can also impact the results. It’s important to include these variables in any comprehensive analysis.</p>
+</section><section id="race-types-and-classifications" class="level3"><h3 class="anchored" data-anchor-id="race-types-and-classifications">5. Race Types and Classifications</h3>
+<p>Horse races come in different forms: flat racing, steeplechase, harness racing, etc. Within these, there are classifications based on the age and ability of the horses. Understanding the type and classification of the race is vital for contextual analysis.</p>
+</section><section id="betting-odds" class="level3"><h3 class="anchored" data-anchor-id="betting-odds">6. Betting Odds</h3>
+<p>While not directly related to the physical aspects of the race, betting odds are a reflection of public perception and can indicate the favorites and underdogs. These odds can sometimes offer insights into factors that may not be immediately apparent in the raw data.</p>
+</section><section id="external-factors" class="level3"><h3 class="anchored" data-anchor-id="external-factors">7. External Factors</h3>
+<p>Factors such as weather conditions on the day of the race, the horse’s mood and health, and even the jockey’s physical condition can influence the race outcome. While some of these are difficult to quantify, they are important to acknowledge.</p>
+<p>Now that we identified the variables that can impact race results, lets get a little more specific. Because when I looked at the data I asked myself “what the heck means P.O.T? What does the rating mean in the Form tab?”</p>
+<p>Well, let’s answer that, it might get a little boring of a list, but hang on, we’re almost finishing.</p>
+<ul>
+<li><p>CAREER: This shows the horse’s total career statistics, often in the format of starts-wins-seconds-thirds. For example, “27-10-4-4” would mean the horse has started 27 races, winning 10, finishing second 4 times, and third 4 times. The same idea goes for Season</p></li>
+<li><p>GRP &amp; LISTED: This column shows the horse’s record in Group and Listed races, which are higher-class races. “7-2-1-0” means the horse has entered 7 such races, won 2, came second once, and has not placed third.</p></li>
+<li><p>1ST UP: The horse’s performance when racing for the first time in a new racing season or after a break. “6-1-1-3” indicates 6 first-up starts, with 1 win, 1 second, and 3 third-place finishes. Same idea goes for 2ND UP and 3RD UP.</p></li>
+<li><p>FIRM/GOOD/SOFT/HEAVY: These columns indicate the horse’s performance on different track conditions. For example, “17-7-1-4” under GOOD suggests the horse has raced 17 times on good rated tracks, with 7 wins, 1 second, and 4 thirds.</p></li>
+<li><p>JUMPS: Shows the horse’s performance in jump races (if applicable), which are races involving hurdles or fences.</p></li>
+<li><p>SYNTH: The horse’s record on synthetic tracks, which are artificial surfaces.</p></li>
+<li><p>POS: The position the horse finished in the race.</p></li>
+<li><p>HORSE/TRAINER/JOCKEY: Names of the horse, the trainer(s), and the jockey.</p></li>
+<li><p>PRIZE/CLASS: The total prize money and the class of the race (e.g., G1 for Group 1, which is the highest level of race).</p></li>
+<li><p>WGT: The weight carried by the horse, including the jockey and gear.</p></li>
+<li><p>800M/400M: The horse’s position at 800 meters and 400 meters from the finish line.</p></li>
+<li><p>MARGIN: How far the horse was from the winner, in lengths.</p></li>
+<li><p>RATING: A handicap rating assigned to a horse based on its performance. It’s a number that allows horses of different abilities to compete on equal terms, with higher-rated horses carrying more weight. The exact method of calculation can vary by racing jurisdiction but generally involves the horse’s past performance, the quality of the races it has run in, and the margins of victory or defeat.</p></li>
+<li><p>ODDS: The betting odds for the horse at the start of the race.</p></li>
+<li><p>COM: Commentary or notes about the horse’s performance in the race.</p></li>
+</ul>
+<p>There three more that I found interesting:</p>
+<ul>
+<li><p>P.O.T: This stands for “Profit on Turnover.” It is a measure used by bettors to calculate the profitability of their bets. For a jockey, it would typically refer to the profitability of betting on all the races that the jockey has ridden. It is calculated by taking the total returns from bets on a jockey’s rides, subtracting the total amount bet, and then dividing by the total amount bet. This is often expressed as a percentage. A positive percentage means a profit, while a negative percentage indicates a loss.</p></li>
+<li><p>S Rate: This is usually shorthand for “Strike Rate.” In horse racing, a jockey’s strike rate is the percentage of races won out of the total number of races ridden. A higher strike rate indicates a jockey who wins a larger proportion of their races. It’s calculated as (Number of Wins / Total Rides) x 100.</p></li>
+<li><p>U.D.R: This typically stands for “Universal Driver Rating” or sometimes “Universal Jockey Rating,” depending on the context. It’s a handicapping tool used primarily in harness racing but can be applied in thoroughbred racing to assess a driver’s or jockey’s performance. The U.D.R. is calculated by a formula that takes into account wins, seconds, and thirds, giving more weight to wins. The formula is ([Wins x 9] + [Places x 5] + [Shows x 3]) / (Total Drives x 9). This gives a figure between 0 and 1, which can be interpreted as a batting average. The closer to 1, the better the performance.</p></li>
+</ul>
+<p>I’ll explore the main areas Jockey, Trainer, Horse and Track, sharing my findings and the challenges I encounter at my github (remember I left the link at the start). This exploration is not just about understanding data; it’s about understanding the sport of horse racing itself. So, stay tuned as we dive deeper into this fascinating world!</p>
+
+
+</section></section> ]]></description>
+  <category>Data Science</category>
+  <category>R</category>
+  <category>sports analytics</category>
+  <category>race</category>
+  <guid>https://iannimuliterno.com/posts/2024-01-Horse_Race_and_DataScience/index.html</guid>
+  <pubDate>Thu, 25 Jan 2024 03:00:00 GMT</pubDate>
+  <media:content url="https://iannimuliterno.com/posts/2024-01-Horse_Race_and_DataScience/horserace.jpg" medium="image" type="image/jpeg"/>
+</item>
 <item>
   <title>Text mining on Harry Potter dialogues</title>
   <dc:creator>I. Muliterno</dc:creator>
@@ -1117,147 +1181,89 @@ Length: 81, dtype: int64</code></pre>
   <title>Modeling Approaches</title>
   <dc:creator>Ianní Muliterno</dc:creator>
   <link>https://iannimuliterno.com/posts/2023-03-models_and_applications/index.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<p>As a senior data scientist, one of the key responsibilities is to identify the right modeling approach for a given problem. Different modeling approaches have different strengths and weaknesses, and choosing the right approach is crucial to building an effective and accurate model. This post is the first in a series of posts on modeling approaches, I will discuss the strengths and weaknesses of some popular modeling approaches and when to apply different combinations.</p>
+  <description><![CDATA[ <p>As a senior data scientist, one of the key responsibilities is to identify the right modeling approach for a given problem. Different modeling approaches have different strengths and weaknesses, and choosing the right approach is crucial to building an effective and accurate model. This post is the first in a series of posts on modeling approaches, I will discuss the strengths and weaknesses of some popular modeling approaches and when to apply different combinations.</p>
 <p>This post is the first in a series of posts on modeling approaches</p>
-<section id="linear-regression" class="level2">
-<h2 class="anchored" data-anchor-id="linear-regression">1. Linear Regression</h2>
+<section id="linear-regression" class="level2"><h2 class="anchored" data-anchor-id="linear-regression">1. Linear Regression</h2>
 <p>Linear regression is a popular modeling approach used for predicting continuous values. It is a simple yet powerful modeling approach that works well when the relationship between the predictor and response variable is linear. Linear regression models are easy to interpret and can be used for both simple and complex problems.</p>
-<section id="strengths" class="level3">
-<h3 class="anchored" data-anchor-id="strengths">Strengths:</h3>
+<section id="strengths" class="level3"><h3 class="anchored" data-anchor-id="strengths">Strengths:</h3>
 <ul>
 <li><p>Easy to interpret and explain.</p></li>
 <li><p>Works well when the relationship between predictor and response variable is linear.</p></li>
 <li><p>Can handle both simple and complex problems.</p></li>
-</ul>
-</section>
-<section id="weaknesses" class="level3">
-<h3 class="anchored" data-anchor-id="weaknesses">Weaknesses:</h3>
+</ul></section><section id="weaknesses" class="level3"><h3 class="anchored" data-anchor-id="weaknesses">Weaknesses:</h3>
 <ul>
 <li><p>Assumes a linear relationship between predictor and response variable.</p></li>
 <li><p>Sensitive to outliers and multicollinearity.</p></li>
-</ul>
-</section>
-<section id="when-to-use" class="level3">
-<h3 class="anchored" data-anchor-id="when-to-use">When to use:</h3>
+</ul></section><section id="when-to-use" class="level3"><h3 class="anchored" data-anchor-id="when-to-use">When to use:</h3>
 <ul>
 <li><p>When the relationship between predictor and response variable is linear.</p></li>
 <li><p>When the data has few predictors.</p></li>
 <li><p>When the data has no multicollinearity or outliers.</p></li>
-</ul>
-</section>
-</section>
-<section id="decision-trees" class="level2">
-<h2 class="anchored" data-anchor-id="decision-trees">2. Decision Trees</h2>
+</ul></section></section><section id="decision-trees" class="level2"><h2 class="anchored" data-anchor-id="decision-trees">2. Decision Trees</h2>
 <p>Decision trees are a popular modeling approach used for classification and regression. They work by partitioning the data into smaller subsets based on the values of the predictors. Decision trees are easy to interpret and can handle both categorical and continuous predictors. Personally, I prefer to apply only for categorical predictors.</p>
-<section id="strengths-1" class="level3">
-<h3 class="anchored" data-anchor-id="strengths-1">Strengths:</h3>
+<section id="strengths-1" class="level3"><h3 class="anchored" data-anchor-id="strengths-1">Strengths:</h3>
 <ul>
 <li><p>Easy to interpret and explain.</p></li>
 <li><p>Can handle both categorical and continuous predictors.</p></li>
 <li><p>Can handle interactions between predictors.</p></li>
-</ul>
-</section>
-<section id="weaknesses-1" class="level3">
-<h3 class="anchored" data-anchor-id="weaknesses-1">Weaknesses:</h3>
+</ul></section><section id="weaknesses-1" class="level3"><h3 class="anchored" data-anchor-id="weaknesses-1">Weaknesses:</h3>
 <ul>
 <li><p>Can overfit the data.</p></li>
 <li><p>Sensitive to small changes in the data.</p></li>
-</ul>
-</section>
-<section id="when-to-use-1" class="level3">
-<h3 class="anchored" data-anchor-id="when-to-use-1">When to use:</h3>
+</ul></section><section id="when-to-use-1" class="level3"><h3 class="anchored" data-anchor-id="when-to-use-1">When to use:</h3>
 <ul>
 <li><p>When the data has many predictors.</p></li>
 <li><p>When the data has interactions between predictors.</p></li>
 <li><p>When the data has both categorical and continuous predictors.</p></li>
-</ul>
-</section>
-</section>
-<section id="random-forests" class="level2">
-<h2 class="anchored" data-anchor-id="random-forests">3. Random Forests</h2>
+</ul></section></section><section id="random-forests" class="level2"><h2 class="anchored" data-anchor-id="random-forests">3. Random Forests</h2>
 <p>Random forests are an extension of decision trees that work by combining multiple decision trees to make a final prediction. They are a popular modeling approach used for classification and regression. Random forests are robust to overfitting and can handle both categorical and continuous predictors.</p>
-<section id="strengths-2" class="level3">
-<h3 class="anchored" data-anchor-id="strengths-2">Strengths:</h3>
+<section id="strengths-2" class="level3"><h3 class="anchored" data-anchor-id="strengths-2">Strengths:</h3>
 <ul>
 <li><p>Robust to overfitting.</p></li>
 <li><p>Can handle both categorical and continuous predictors.</p></li>
 <li><p>Can handle interactions between predictors.</p></li>
-</ul>
-</section>
-<section id="weaknesses-2" class="level3">
-<h3 class="anchored" data-anchor-id="weaknesses-2">Weaknesses:</h3>
+</ul></section><section id="weaknesses-2" class="level3"><h3 class="anchored" data-anchor-id="weaknesses-2">Weaknesses:</h3>
 <ul>
 <li><p>Can be slow to train and predict.</p></li>
 <li><p>Can be difficult to interpret.</p></li>
-</ul>
-</section>
-<section id="when-to-use-2" class="level3">
-<h3 class="anchored" data-anchor-id="when-to-use-2">When to use:</h3>
+</ul></section><section id="when-to-use-2" class="level3"><h3 class="anchored" data-anchor-id="when-to-use-2">When to use:</h3>
 <ul>
 <li><p>When the data has many predictors.</p></li>
 <li><p>When the data has interactions between predictors.</p></li>
 <li><p>When the data has both categorical and continuous predictors.</p></li>
 <li><p>When the data has outliers or missing values.</p></li>
-</ul>
-</section>
-</section>
-<section id="neural-networks" class="level2">
-<h2 class="anchored" data-anchor-id="neural-networks">4. Neural Networks</h2>
+</ul></section></section><section id="neural-networks" class="level2"><h2 class="anchored" data-anchor-id="neural-networks">4. Neural Networks</h2>
 <p>Neural networks are a popular modeling approach used for classification and regression. They work by mimicking the structure of the human brain to identify complex patterns in the data. Neural networks are powerful and can handle both linear and nonlinear relationships between predictors and response variables.</p>
-<section id="strengths-3" class="level3">
-<h3 class="anchored" data-anchor-id="strengths-3">Strengths:</h3>
+<section id="strengths-3" class="level3"><h3 class="anchored" data-anchor-id="strengths-3">Strengths:</h3>
 <ul>
 <li><p>Can handle both linear and nonlinear relationships between predictors and response variables.</p></li>
 <li><p>Can identify complex patterns in the data.</p></li>
 <li><p>Can handle large and complex datasets.</p></li>
-</ul>
-</section>
-<section id="weaknesses-3" class="level3">
-<h3 class="anchored" data-anchor-id="weaknesses-3">Weaknesses:</h3>
+</ul></section><section id="weaknesses-3" class="level3"><h3 class="anchored" data-anchor-id="weaknesses-3">Weaknesses:</h3>
 <ul>
 <li><p>Can be slow to train and predict.</p></li>
 <li><p>Can overfit the data.</p></li>
-</ul>
-</section>
-<section id="when-to-use-3" class="level3">
-<h3 class="anchored" data-anchor-id="when-to-use-3">When to use:</h3>
+</ul></section><section id="when-to-use-3" class="level3"><h3 class="anchored" data-anchor-id="when-to-use-3">When to use:</h3>
 <ul>
 <li><p>When the data has many predictors.</p></li>
 <li><p>When the data has complex relationships between predictors and response variables.</p></li>
 <li><p>When the data has large and complex datasets.</p></li>
-</ul>
-</section>
-</section>
-<section id="support-vector-machines" class="level2">
-<h2 class="anchored" data-anchor-id="support-vector-machines">5. Support Vector Machines</h2>
+</ul></section></section><section id="support-vector-machines" class="level2"><h2 class="anchored" data-anchor-id="support-vector-machines">5. Support Vector Machines</h2>
 <p>Support Vector Machines (SVMs) are a popular modeling approach used for classification and regression. They work by finding the hyperplane that best separates the data into different classes. SVMs are powerful and can handle both linear and nonlinear relationships between predictors and response variables.</p>
-<section id="strengths-4" class="level3">
-<h3 class="anchored" data-anchor-id="strengths-4">Strengths:</h3>
+<section id="strengths-4" class="level3"><h3 class="anchored" data-anchor-id="strengths-4">Strengths:</h3>
 <ul>
 <li><p>Can handle both linear and nonlinear relationships between predictors and response variables.</p></li>
 <li><p>Can handle high-dimensional datasets.</p></li>
 <li><p>Can handle outliers.</p></li>
-</ul>
-</section>
-<section id="weaknesses-4" class="level3">
-<h3 class="anchored" data-anchor-id="weaknesses-4">Weaknesses:</h3>
+</ul></section><section id="weaknesses-4" class="level3"><h3 class="anchored" data-anchor-id="weaknesses-4">Weaknesses:</h3>
 <ul>
 <li><p>Can be sensitive to the choice of kernel function.</p></li>
 <li><p>Can be slow to train and predict.</p></li>
-</ul>
-</section>
-<section id="when-to-use-4" class="level3">
-<h3 class="anchored" data-anchor-id="when-to-use-4">When to use:</h3>
+</ul></section><section id="when-to-use-4" class="level3"><h3 class="anchored" data-anchor-id="when-to-use-4">When to use:</h3>
 <ul>
 <li>When the data has many predictors.</li>
 </ul>
-<!-- -->
-<ul>
+<!-- --><ul>
 <li><p>When the data has both linear and nonlinear relationships between predictors and response variables.</p></li>
 <li><p>When the data has outliers.</p></li>
 </ul>
@@ -1266,10 +1272,7 @@ Length: 81, dtype: int64</code></pre>
 <p>In summary, there are a variety of modeling approaches that can be used in data science, each with its own strengths and weaknesses. By carefully considering the specific problem at hand and choosing the right combination of modeling approaches, data scientists can build accurate and robust models that provide valuable insights and predictions.</p>
 
 
-</section>
-</section>
-
- ]]></description>
+</section></section> ]]></description>
   <category>Machine learning</category>
   <category>Statistics</category>
   <category>Data Science</category>

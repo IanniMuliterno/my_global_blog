@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="I. Muliterno">
+<meta name="dcterms.date" content="2024-01-25">
+<title>IMuliterno - Horse Race and Data Science</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script><link rel="stylesheet" href="../../styles.css">
+<meta name="twitter:title" content="IMuliterno - Horse Race and Data Science">
+<meta name="twitter:description" content="Hello again my friends, I got into a very interesting project while learning how to better work with BeautifulSoup, and I felt like sharing with you.">
+<meta name="twitter:image" content="https://iannimuliterno.com/posts\2024-01-Horse_Race_and_DataScience\horserace.jpg">
+<meta name="twitter:creator" content="@IanniMuliterno">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg navbar-dark "><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">IMuliterno</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+<li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+</ul>
+<div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Horse Race and Data Science</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Data Science</div>
+                <div class="quarto-category">R</div>
+                <div class="quarto-category">sports analytics</div>
+                <div class="quarto-category">race</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>I. Muliterno </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">January 25, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">On this page</h2>
+   
+  <ul>
+<li>
+<a href="#what-you-need-to-know-before-going-into-a-horse-race-dataset" id="toc-what-you-need-to-know-before-going-into-a-horse-race-dataset" class="nav-link active" data-scroll-target="#what-you-need-to-know-before-going-into-a-horse-race-dataset"><strong>What you need to know before going into a horse race dataset</strong></a>
+  <ul class="collapse">
+<li><a href="#the-jockeys" id="toc-the-jockeys" class="nav-link" data-scroll-target="#the-jockeys">1. The Jockeys</a></li>
+  <li><a href="#the-trainers" id="toc-the-trainers" class="nav-link" data-scroll-target="#the-trainers">2. The Trainers</a></li>
+  <li><a href="#the-horses" id="toc-the-horses" class="nav-link" data-scroll-target="#the-horses">3. The Horses</a></li>
+  <li><a href="#the-tracks" id="toc-the-tracks" class="nav-link" data-scroll-target="#the-tracks">4. The Tracks</a></li>
+  <li><a href="#race-types-and-classifications" id="toc-race-types-and-classifications" class="nav-link" data-scroll-target="#race-types-and-classifications">5. Race Types and Classifications</a></li>
+  <li><a href="#betting-odds" id="toc-betting-odds" class="nav-link" data-scroll-target="#betting-odds">6. Betting Odds</a></li>
+  <li><a href="#external-factors" id="toc-external-factors" class="nav-link" data-scroll-target="#external-factors">7. External Factors</a></li>
+  </ul>
+</li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content"><p>Hello again my friends, I got into a very interesting project while learning how to better work with <code>BeautifulSoup</code>, and I felt like sharing with you. I saw a tutorial and it looked so easy that I decided to find a different table to extract so I could have a better challenge and ended up <a href="http://www.racebase.co.nz/jockthis.htm">here</a>. After <a href="https://github.com/IanniMuliterno/Webscrapping-lesson-with-BeautifulSoup">successfully extracting</a> the jockeys stats table, I wondered “How much people already played with horse racing data?”</p>
+<p>Easy answer: not much, according to <a href="https://en.wikipedia.org/wiki/Horse_racing">wikipedia</a>, only 10 countries host horse racing, and during my research for data, I found info mostly about Australia, New Zealand, Hong Kong and Singapure races.</p>
+<p>Well that means more <code>BeautifulSoup</code> practice for me, right?!</p>
+<p>But before that, I need to understand the horse racing world, I’ve read so many expressions that are completely new to me. Because of that, todays post is aiming to show:</p>
+<section id="what-you-need-to-know-before-going-into-a-horse-race-dataset" class="level2"><h2 class="anchored" data-anchor-id="what-you-need-to-know-before-going-into-a-horse-race-dataset"><strong>What you need to know before going into a horse race dataset</strong></h2>
+<p>To effectively analyze horse race data, there are several key areas one must understand:</p>
+<section id="the-jockeys" class="level3"><h3 class="anchored" data-anchor-id="the-jockeys">1. The Jockeys</h3>
+<p>The jockey is much more than just a rider. Their skill, experience, and even weight play a significant role in the performance of the horse. Understanding a jockey’s track record, including wins, losses, and strategies, can provide valuable insights into future races, and at <a href="https://www.racing.com">raceing</a> I found:</p>
+<p><img src="jockey_stats.PNG" class="img-fluid"></p>
+</section><section id="the-trainers" class="level3"><h3 class="anchored" data-anchor-id="the-trainers">2. The Trainers</h3>
+<p>Behind every successful horse and jockey is a trainer. Trainers are responsible for preparing the horse for the race, which includes physical training, nutrition, and strategy. Analyzing a trainer’s history, methods, and success rate is crucial for predicting how well a horse might perform.</p>
+<p><img src="trainer_Stats.PNG" class="img-fluid"></p>
+</section><section id="the-horses" class="level3"><h3 class="anchored" data-anchor-id="the-horses">3. The Horses</h3>
+<p>Each horse has its unique traits - age, breed, lineage, past performance, and more. Some breeds are known for their speed, others for endurance. The lineage can also give clues about a horse’s potential. Understanding these aspects can significantly enhance the analysis of race outcomes. Also, you will see different info from the two above, that’s because each one has a <em>stats</em> and <em>form</em> tab, what you saw above was the stats tab, now lets see the other one.</p>
+<p><img src="horse_form.PNG" class="img-fluid"></p>
+</section><section id="the-tracks" class="level3"><h3 class="anchored" data-anchor-id="the-tracks">4. The Tracks</h3>
+<p>Racetracks vary widely - in terms of surface (dirt, turf, synthetic), length, and weather conditions. Some horses perform better on certain surfaces or track lengths. The condition of the track on race day can also impact the results. It’s important to include these variables in any comprehensive analysis.</p>
+</section><section id="race-types-and-classifications" class="level3"><h3 class="anchored" data-anchor-id="race-types-and-classifications">5. Race Types and Classifications</h3>
+<p>Horse races come in different forms: flat racing, steeplechase, harness racing, etc. Within these, there are classifications based on the age and ability of the horses. Understanding the type and classification of the race is vital for contextual analysis.</p>
+</section><section id="betting-odds" class="level3"><h3 class="anchored" data-anchor-id="betting-odds">6. Betting Odds</h3>
+<p>While not directly related to the physical aspects of the race, betting odds are a reflection of public perception and can indicate the favorites and underdogs. These odds can sometimes offer insights into factors that may not be immediately apparent in the raw data.</p>
+</section><section id="external-factors" class="level3"><h3 class="anchored" data-anchor-id="external-factors">7. External Factors</h3>
+<p>Factors such as weather conditions on the day of the race, the horse’s mood and health, and even the jockey’s physical condition can influence the race outcome. While some of these are difficult to quantify, they are important to acknowledge.</p>
+<p>Now that we identified the variables that can impact race results, lets get a little more specific. Because when I looked at the data I asked myself “what the heck means P.O.T? What does the rating mean in the Form tab?”</p>
+<p>Well, let’s answer that, it might get a little boring of a list, but hang on, we’re almost finishing.</p>
+<ul>
+<li><p>CAREER: This shows the horse’s total career statistics, often in the format of starts-wins-seconds-thirds. For example, “27-10-4-4” would mean the horse has started 27 races, winning 10, finishing second 4 times, and third 4 times. The same idea goes for Season</p></li>
+<li><p>GRP &amp; LISTED: This column shows the horse’s record in Group and Listed races, which are higher-class races. “7-2-1-0” means the horse has entered 7 such races, won 2, came second once, and has not placed third.</p></li>
+<li><p>1ST UP: The horse’s performance when racing for the first time in a new racing season or after a break. “6-1-1-3” indicates 6 first-up starts, with 1 win, 1 second, and 3 third-place finishes. Same idea goes for 2ND UP and 3RD UP.</p></li>
+<li><p>FIRM/GOOD/SOFT/HEAVY: These columns indicate the horse’s performance on different track conditions. For example, “17-7-1-4” under GOOD suggests the horse has raced 17 times on good rated tracks, with 7 wins, 1 second, and 4 thirds.</p></li>
+<li><p>JUMPS: Shows the horse’s performance in jump races (if applicable), which are races involving hurdles or fences.</p></li>
+<li><p>SYNTH: The horse’s record on synthetic tracks, which are artificial surfaces.</p></li>
+<li><p>POS: The position the horse finished in the race.</p></li>
+<li><p>HORSE/TRAINER/JOCKEY: Names of the horse, the trainer(s), and the jockey.</p></li>
+<li><p>PRIZE/CLASS: The total prize money and the class of the race (e.g., G1 for Group 1, which is the highest level of race).</p></li>
+<li><p>WGT: The weight carried by the horse, including the jockey and gear.</p></li>
+<li><p>800M/400M: The horse’s position at 800 meters and 400 meters from the finish line.</p></li>
+<li><p>MARGIN: How far the horse was from the winner, in lengths.</p></li>
+<li><p>RATING: A handicap rating assigned to a horse based on its performance. It’s a number that allows horses of different abilities to compete on equal terms, with higher-rated horses carrying more weight. The exact method of calculation can vary by racing jurisdiction but generally involves the horse’s past performance, the quality of the races it has run in, and the margins of victory or defeat.</p></li>
+<li><p>ODDS: The betting odds for the horse at the start of the race.</p></li>
+<li><p>COM: Commentary or notes about the horse’s performance in the race.</p></li>
+</ul>
+<p>There three more that I found interesting:</p>
+<ul>
+<li><p>P.O.T: This stands for “Profit on Turnover.” It is a measure used by bettors to calculate the profitability of their bets. For a jockey, it would typically refer to the profitability of betting on all the races that the jockey has ridden. It is calculated by taking the total returns from bets on a jockey’s rides, subtracting the total amount bet, and then dividing by the total amount bet. This is often expressed as a percentage. A positive percentage means a profit, while a negative percentage indicates a loss.</p></li>
+<li><p>S Rate: This is usually shorthand for “Strike Rate.” In horse racing, a jockey’s strike rate is the percentage of races won out of the total number of races ridden. A higher strike rate indicates a jockey who wins a larger proportion of their races. It’s calculated as (Number of Wins / Total Rides) x 100.</p></li>
+<li><p>U.D.R: This typically stands for “Universal Driver Rating” or sometimes “Universal Jockey Rating,” depending on the context. It’s a handicapping tool used primarily in harness racing but can be applied in thoroughbred racing to assess a driver’s or jockey’s performance. The U.D.R. is calculated by a formula that takes into account wins, seconds, and thirds, giving more weight to wins. The formula is ([Wins x 9] + [Places x 5] + [Shows x 3]) / (Total Drives x 9). This gives a figure between 0 and 1, which can be interpreted as a batting average. The closer to 1, the better the performance.</p></li>
+</ul>
+<p>I’ll explore the main areas Jockey, Trainer, Horse and Track, sharing my findings and the challenges I encounter at my github (remember I left the link at the start). This exploration is not just about understanding data; it’s about understanding the sport of horse racing itself. So, stay tuned as we dive deeper into this fascinating world!</p>
+
+
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var filterRegex = new RegExp(/^(?:http:|https:)\/\/www\.imuliterno\.com\/**/);
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+    var links = window.document.querySelectorAll('a:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          // default icon
+          link.classList.add("external");
+      }
+    }
+});
+</script><script src="https://giscus.app/client.js" data-repo="IanniMuliterno/my_global_blog" data-repo-id="R_kgDOJEQ6FA" data-category="General" data-category-id="DIC_kwDOJEQ6FM4CUlm3" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">Blog made with <a href="https://quarto.org/">Quarto</a>, by Ianní Muliterno.</div>   
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+<li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/IanniMuliterno/">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/IanniMuliterno">
+      <i class="bi bi-twitter" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="mailto:iannimuliterno@gmail.com">
+      <i class="bi bi-envelope" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+</div>
+  </div>
+</footer>
+
+
+</body></html>
