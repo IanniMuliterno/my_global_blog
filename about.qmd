@@ -2,6 +2,6 @@
 title: "About"
 ---
 
-I am a data scientist and here I practice.
+I am a data scientist and this is an extension of my portfolio. You can check more of my work [here](https://github.com/IanniMuliterno)
 
-My expertise lies in developing and implementing data-driven solutions to drive business growth and enhance performance. My main programming are R, SQL and Python.
+My expertise lies in Machine learning, AI engineering and developing and implementing data-driven solutions to drive business growth and enhance performance. If you speak portuguese, you might enjoy my [substrack](https://substack.com/@ianmuliterno) and instagram (@muliterno_) as well.

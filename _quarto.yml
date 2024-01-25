@@ -25,7 +25,7 @@ website:
 
 format:
   html:
-    theme: vapor
+    theme: lux
     css: styles.css
     toc: true
     code-copy: true
