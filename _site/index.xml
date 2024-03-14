@@ -10,7 +10,53 @@
 <atom:link href="https://iannimuliterno.com/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.2.335</generator>
-<lastBuildDate>Thu, 25 Jan 2024 03:00:00 GMT</lastBuildDate>
+<lastBuildDate>Wed, 13 Mar 2024 03:00:00 GMT</lastBuildDate>
+<item>
+  <title>Tech professionals vs Job interviews</title>
+  <dc:creator>I. Muliterno</dc:creator>
+  <link>https://iannimuliterno.com/posts/2024-03-interview_assistant/index.html</link>
+  <description><![CDATA[ <p>Have you ever needed a skill at a level you didn’t expect? When I was a statistics intern, I couldn’t have imagined how important soft skills would become. Now, 8 years later, as a Senior Data Scientist, it’s crystal clear to me: the most technically proficient professional who lacks communication skills will be outperformed by someone with moderate technical expertise but who can tell a compelling story and make themselves understood without boring anyone.</p>
+<section id="the-changing-landscape-of-professional-tenures" class="level3"><h3 class="anchored" data-anchor-id="the-changing-landscape-of-professional-tenures"><strong>The Changing Landscape of Professional Tenures</strong></h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://iannimuliterno.com/posts/2024-03-interview_assistant/genz.jpg" class="img-fluid figure-img" width="561"></p>
+<p></p><figcaption class="figure-caption">Gen Z</figcaption><p></p>
+</figure>
+</div>
+<p>The era of spending an entire career in one company is becoming a relic of the past, especially in the tech industry. Modern professionals, driven by a quest for diverse experiences and personal growth, are changing jobs more frequently than ever before. This shift is supported by data from various analyses:</p>
+<ul>
+<li><p>According to a turnover report from <a href="https://www.linkedin.com/business/talent/blog/talent-strategy/industries-with-the-highest-turnover-rates">Linkedin</a> the average tenure of employees in tech companies is significantly lower than in other industries, often hovering around two to three years.</p></li>
+<li><p>Another <a href="https://anz.peoplemattersglobal.com/article/employee-engagement/job-loyalty-on-the-decline-are-gen-z-less-committed-to-long-term-employment-37627">report</a> highlights a growing trend among younger professionals, particularly millennials and Gen Z, who prioritize learning opportunities and workplace culture over long-term job security.</p></li>
+</ul></section><section id="the-reality-of-job-interviews" class="level3"><h3 class="anchored" data-anchor-id="the-reality-of-job-interviews"><strong>The Reality of Job Interviews</strong></h3>
+<p>In this dynamic career landscape, job interviews have become a critical junction in a professional’s journey. However, these interviews often come with their own set of challenges:</p>
+<ul>
+<li><p><strong>Short Duration</strong>: Many interviews last only about 30 minutes ( I’ve seen it last 10), providing a narrow window to make a strong impression.</p></li>
+<li><p><strong>Nervousness</strong>: The pressure to perform well in such a limited time can heighten anxiety, affecting the interviewee’s ability to communicate effectively.</p></li>
+<li><p><strong>The Importance of Practice</strong>: Given these constraints, practicing for interviews becomes paramount. It’s not just about rehearsing answers but also about learning to manage nerves, articulate thoughts clearly, and demonstrate those crucial soft skills.</p></li>
+</ul></section><section id="the-inspiration-behind-the-interview-assistant-app" class="level3"><h3 class="anchored" data-anchor-id="the-inspiration-behind-the-interview-assistant-app"><strong>The Inspiration Behind the Interview Assistant App</strong></h3>
+<p><img src="https://iannimuliterno.com/posts/2024-03-interview_assistant/app.PNG" class="img-fluid" width="677"></p>
+<p>Recognizing these challenges, I was inspired to develop an [Interview Assistant app](<a href="https://ianmuliterno.shinyapps.io/interview_assistant/" class="uri">https://ianmuliterno.shinyapps.io/interview_assistant/</a>), designed to help professionals navigate the interview process more effectively. The app offers a range of features aimed at enhancing interview readiness, from simulated interview scenarios to feedback mechanisms that help users improve their performance over time. All you need to do before, if you still don’t have a bard key, is checking the recommended link in the app and generating your key ( it’s for free).</p>
+</section><section id="how-the-interview-assistant-app-helps" class="level3"><h3 class="anchored" data-anchor-id="how-the-interview-assistant-app-helps"><strong>How the Interview Assistant App Helps</strong></h3>
+<ul>
+<li><p><strong>Simulated Interviews</strong>: Users can engage in mock interviews tailored to their industry and role, helping them practice responses to common questions.</p></li>
+<li><p><strong>Feedback and Improvement</strong>: The app provides constructive feedback on users’ answers, highlighting areas for improvement and offering tips on showcasing soft skills.</p></li>
+<li><p><strong>Confidence Building</strong>: By familiarizing themselves with the interview process and improving their responses, users can approach real interviews with greater confidence and poise.</p></li>
+</ul></section><section id="in-summary" class="level3"><h3 class="anchored" data-anchor-id="in-summary"><strong>In Summary</strong></h3>
+<ul>
+<li>soft skills are as crucial as technical expertise</li>
+<li>job tenures become increasingly shorter, so professionals are exposed to job interviews more often</li>
+<li>The Interview Assistant app represents a step forward in empowering professionals to present their best selves during interviews, turning potential obstacles into opportunities for growth and success.</li>
+</ul>
+
+
+</section> ]]></description>
+  <category>Data Science</category>
+  <category>Shiny</category>
+  <category>soft skills</category>
+  <category>job</category>
+  <guid>https://iannimuliterno.com/posts/2024-03-interview_assistant/index.html</guid>
+  <pubDate>Wed, 13 Mar 2024 03:00:00 GMT</pubDate>
+  <media:content url="https://iannimuliterno.com/posts/2024-03-interview_assistant/thumb.jpg" medium="image" type="image/jpeg"/>
+</item>
 <item>
   <title>Horse Race and Data Science</title>
   <dc:creator>I. Muliterno</dc:creator>
@@ -375,10 +421,10 @@ observed    benign malignant
 <pre><code>Carregando pacotes exigidos: lattice</code></pre>
 </div>
 <div class="sourceCode" id="cb19" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;"># Define training control</span></span>
-<span><span class="va" style="color: #111111;">train_control</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/pkg/caret/man/trainControl.html">trainControl</a></span><span class="op" style="color: #5E5E5E;">(</span>method <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"cv"</span>, number <span class="op" style="color: #5E5E5E;">=</span> <span class="fl" style="color: #AD0000;">10</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="va" style="color: #111111;">train_control</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;">trainControl</span><span class="op" style="color: #5E5E5E;">(</span>method <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"cv"</span>, number <span class="op" style="color: #5E5E5E;">=</span> <span class="fl" style="color: #AD0000;">10</span><span class="op" style="color: #5E5E5E;">)</span></span>
 <span></span>
 <span><span class="co" style="color: #5E5E5E;"># Train the model using cross-validation</span></span>
-<span><span class="va" style="color: #111111;">rf_model2</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/pkg/caret/man/train.html">train</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">Class</span> <span class="op" style="color: #5E5E5E;">~</span> <span class="va" style="color: #111111;">.</span>, data <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">BreastCancer</span><span class="op" style="color: #5E5E5E;">[</span>,<span class="op" style="color: #5E5E5E;">-</span><span class="fl" style="color: #AD0000;">1</span><span class="op" style="color: #5E5E5E;">]</span> <span class="op" style="color: #5E5E5E;">%&gt;%</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="op" style="color: #5E5E5E;">)</span>, trControl <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">train_control</span>, method <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"rf"</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="va" style="color: #111111;">rf_model2</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;">train</span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">Class</span> <span class="op" style="color: #5E5E5E;">~</span> <span class="va" style="color: #111111;">.</span>, data <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">BreastCancer</span><span class="op" style="color: #5E5E5E;">[</span>,<span class="op" style="color: #5E5E5E;">-</span><span class="fl" style="color: #AD0000;">1</span><span class="op" style="color: #5E5E5E;">]</span> <span class="op" style="color: #5E5E5E;">%&gt;%</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="op" style="color: #5E5E5E;">)</span>, trControl <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">train_control</span>, method <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"rf"</span><span class="op" style="color: #5E5E5E;">)</span></span>
 <span></span>
 <span><span class="co" style="color: #5E5E5E;"># Print the model</span></span>
 <span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">rf_model2</span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
@@ -433,7 +479,8 @@ The final value used for the model was mtry = 2.</code></pre>
   <title>DDC: Tackling Missing or Inconsistent Data</title>
   <dc:creator>I. Muliterno</dc:creator>
   <link>https://iannimuliterno.com/posts/2023-04-daily_life_ds2/index.html</link>
-  <description><![CDATA[ <p>In the world of data science, dealing with missing or inconsistent data is an everyday challenge. The quality of your insights, predictions, and models heavily depends on the quality of the data you use. In this second post of our series on data science daily life challenges, we’ll explore various strategies for handling missing or inconsistent data using R, and how to make informed decisions about the best approach for your specific situation.</p>
+  <description><![CDATA[ <p>Hello and welcome to the Data Driven Chronicles (DDC) series, where I share small doses of my life as a data professional. Today we will talk about a common task: dealing with missing or inconsistent data.</p>
+<p>In the world of data science, dealing with missing or inconsistent data is an everyday challenge. The quality of your insights, predictions, and models heavily depends on the quality of the data you use. In this second post of our series on data science daily life challenges, we’ll explore various strategies for handling missing or inconsistent data using R, and how to make informed decisions about the best approach for your specific situation.</p>
 <ol type="1">
 <li>Understand the nature of the missing or inconsistent data</li>
 </ol>

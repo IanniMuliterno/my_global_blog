@@ -24,6 +24,8 @@ html:
   code-fold: true
 ---
 
+Hello and welcome to the Data Driven Chronicles (DDC) series, where I share small doses of my life as a data professional. Today we will talk about a common task: dealing with missing or inconsistent data.
+
 In the world of data science, dealing with missing or inconsistent data is an everyday challenge. The quality of your insights, predictions, and models heavily depends on the quality of the data you use. In this second post of our series on data science daily life challenges, we'll explore various strategies for handling missing or inconsistent data using R, and how to make informed decisions about the best approach for your specific situation.
 
 1.  Understand the nature of the missing or inconsistent data
