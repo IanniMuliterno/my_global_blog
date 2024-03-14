@@ -59,6 +59,10 @@ Recognizing these challenges, I was inspired to develop an [Interview Assistant 
 
 -   **Confidence Building**: By familiarizing themselves with the interview process and improving their responses, users can approach real interviews with greater confidence and poise.
 
+### **Technical interesting fact about this project**
+
+This project marked my first venture into using [Rhino](https://appsilon.github.io/rhino/), an application from Appsilon, which enabled me to implement unit and end-to-end tests (with Cypress), facilitating continuous integration through GitHub Actions. It was a great experience.
+
 ### **In Summary**
 
 -   soft skills are as crucial as technical expertise

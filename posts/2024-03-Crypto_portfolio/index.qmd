@@ -1,0 +1,50 @@
+---
+title: "My first Web3 project"
+author: "I. Muliterno"
+date: "2024-03-19" 
+categories: 
+# exemplo de categorias:
+  - "Web3"
+  - "Crypto"
+  - "Portfolio"
+  - "Optimization"
+image: "thumb.jpg"  
+toc: true # isso habilita o sumário ao lado do post
+#image: "images/logo.png" # imagem usada na página inicial junto ao post
+#bibliography: "pacotes.bib" # arquivo de bibliografia. Pode adicionar mais arquivos!
+draft: false # enquanto estiver draft: true, o post é um rascunho
+knitr: 
+  opts_chunk: 
+    message: true
+    warning: false
+    echo: true
+    fig.align: 'center'
+html:
+  code-fold: true
+---
+
+I am very interested in web3, but I always wondered how to make the best decisions about capital allocations, considering we have hundreds of option and also considering I don't want to stay in front of a computer stressing out about any minor changes I see in the opening and closing prices.
+
+That thought made me study what R could offer to solve that problem, thanks to that I found two amazing packages `crypto2` and `PortfolioAnalytics`. Crypto2 is a package made by Sebastian Stöckl that, as he says in the [official repo](https://github.com/sstoeckl/crypto2), provides `tibbles` with all data available via the web-api of [coinmarketcap.com](https://coinmarketcap.com/). It does not require an API key but in turn only provides information that is also available through the website of [coinmarketcap.com](https://coinmarketcap.com/).
+
+`PortfolioAnalytics` provide numerical solutions for portfolio problems with complex constraints and objective sets.
+
+Currently, supported optimization methods include:
+
+-   random portfolios,
+
+-   differential evolution
+
+-   particle swarm optimization
+
+-   generalized simulated annealing
+
+-   linear and quadratic programming routines
+
+With that, I studied the packages and defined an investment strategy to run automatically in a shiny application. The result is an app that let's you choose a level of risk, and suggest how you should distribute your investment capital to optimize return, based on your risk aversion. Also, you can see the opening and closing prices of each cryptocurrency you choose.
+
+Here's how it looks like:
+
+![](/posts/2024-03-Crypto_portfolio/cryptoapp.PNG)
+
+[Click here](https://ianmuliterno.shinyapps.io/Crypto-Market-Analysis/) and feel free to use it yourself.
