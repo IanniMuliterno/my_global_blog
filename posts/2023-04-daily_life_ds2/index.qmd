@@ -1,0 +1,126 @@
+---
+title: "DDC: Tackling Missing or Inconsistent Data"
+author: "I. Muliterno"
+date: "2023-04-24" 
+categories: 
+# exemplo de categorias:
+  - "Data Science"
+  - "R"
+  - "DDC"
+  - "missing"
+  - "inconsistent"
+image: "DDC.PNG"  
+toc: true # isso habilita o sumário ao lado do post
+#image: "images/logo.png" # imagem usada na página inicial junto ao post
+#bibliography: "pacotes.bib" # arquivo de bibliografia. Pode adicionar mais arquivos!
+draft: false # enquanto estiver draft: true, o post é um rascunho
+knitr: 
+  opts_chunk: 
+    message: true
+    warning: false
+    echo: true
+    fig.align: 'center'
+html:
+  code-fold: true
+---
+
+Hello and welcome to the Data Driven Chronicles (DDC) series, where I share small doses of my life as a data professional. Today we will talk about a common task: dealing with missing or inconsistent data.
+
+In the world of data science, dealing with missing or inconsistent data is an everyday challenge. The quality of your insights, predictions, and models heavily depends on the quality of the data you use. In this second post of our series on data science daily life challenges, we'll explore various strategies for handling missing or inconsistent data using R, and how to make informed decisions about the best approach for your specific situation.
+
+1.  Understand the nature of the missing or inconsistent data
+
+Before diving into any solutions, it's essential to understand the nature of the missing or inconsistent data you're dealing with. In R, you can use the **`summary()`** function to get an overview of your dataset, including the number of missing values:
+
+```{r loadingpacks, include = FALSE}
+library(dplyr)
+library(stringdist)
+library(tidyverse)
+library(mice)
+library(DMwR2)
+```
+
+```{r loading}
+
+# load these packages
+#library(dplyr)
+#library(stringdist)
+#library(tidyverse)
+#library(mice)
+#library(DMwR2)
+
+dataset <- data.frame(col1 = c(1:3, NA),
+                 col2 = c("one", NA,"cool", "text"), 
+                 col3 = c(TRUE, FALSE, TRUE, TRUE), 
+                 col4 = c(0.5, 4.7, 3.2, NA),
+                 date_column = c("2000/1/1","2000/2/1" ,"2000/3/1" ,"2023/13/40"),                 stringsAsFactors = FALSE)
+
+summary(dataset)
+```
+
+2.  Data Imputation
+
+One common approach for dealing with missing data is imputation. Imputation involves estimating the missing values based on other available data. Some popular imputation methods in R include:
+
+-   Mean, median, or mode imputation: Replace missing values with the mean, median, or mode of the column.
+
+```{r}
+
+
+dataset <- dataset %>%
+  mutate(col4 = if_else(is.na(col4), mean(col4, na.rm = TRUE), col4))
+```
+
+-   Linear regression imputation: Use a linear regression model to estimate missing values based on other variables in the dataset.
+
+```{r}
+
+imputed_data <- mice(dataset, method = 'norm.predict', m = 5)
+complete_data <- complete(imputed_data)
+complete_data
+```
+
+-   K-Nearest Neighbours (KNN) imputation: Fill in missing values by averaging the values of the k-nearest neighbours. I will give an example of the code below, but you need a bigger dataset for that approach, that's why the code is commented.
+
+```{r}
+
+#imputed_data <- knnImputation(dataset, k = 5)
+
+```
+
+It's important to note that imputation can introduce bias or distort the underlying data distribution, so it should be used with caution.
+
+3.  Removing missing or inconsistent data
+
+In some cases, it may be appropriate to remove rows or columns containing missing or inconsistent data. This can be done using techniques such as:
+
+-   Listwise deletion: Remove any rows containing missing values.
+
+```{r}
+dataset <- na.omit(dataset)
+```
+
+-   Dropping columns: Remove columns with a high proportion of missing or inconsistent data.
+
+    ```{r}
+    column_with_missing_data <- sapply(dataset,function(x)sum(is.na(x)))
+    column_with_missing_data <- column_with_missing_data[column_with_missing_data == 0]
+
+    dataset <- dataset %>% select(-column_with_missing_data)
+    dataset
+    ```
+
+    Keep in mind that removing data can lead to loss of information and may introduce bias if the data is not missing at random.
+
+    4.  Data Standardisation and Transformation
+
+    Inconsistent data often results from variations in data entry, formats, or units. To address this issue, you can standardise and transform the data using R functions like:
+
+    -   Establishing consistent formats for dates ( in case it is of type character and there's inconsistences like "13/40/2023" the return would be NA, so it will help you to recognise inconsistences.
+
+    ```{r}
+    dataset$date_column <- as.Date(dataset$date_column, format = "%Y/%m/%d")
+    dataset
+    ```
+
+    Dealing with missing or inconsistent data is a common challenge for data scientists, but it's also an opportunity to refine your skills and improve your dataset's quality. By using R to understand the nature of the missing or inconsistent data and applying appropriate strategies, you can make more informed decisions and produce more accurate and reliable insights. In the next post of our series on data science daily life challenges, we'll explore the intricacies of handling high-dimensional data and the techniques used to simplify analyses using R. Stay tuned!
